@@ -17,8 +17,4 @@ public class ExSartagineBlock {
 	private static void register(){
 		registerBlock(pan);
 	}
-	
-	public static void registerRender(){
-		
-	}
 }

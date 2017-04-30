@@ -1,5 +1,4 @@
 {
-    "parent": "block/cube_all",
     "textures": {
         "0": "blocks/iron_block",
         "1": "blocks/planks_oak",
@@ -231,7 +230,7 @@
         {
             "name": "bottom2",
             "from": [ 1.0, 0.0, 3.0 ], 
-            "to": [ 15.0, 1.0, 13.0 ], 
+            "to": [ 15.0, 1.01, 13.0 ], 
             "faces": {
                 "north": { "texture": "#0", "uv": [ 0.0, 0.0, 14.0, 1.0 ] },
                 "east": { "texture": "#0", "uv": [ 0.0, 0.0, 10.0, 1.0 ] },
@@ -270,7 +269,7 @@
             }
         },
         {
-            "name": "Cube",
+            "name": "handle_top",
             "from": [ 7.199999999999999, 4.3, -7.9 ], 
             "to": [ 8.6, 5.699999999999999, -5.9 ], 
             "faces": {
