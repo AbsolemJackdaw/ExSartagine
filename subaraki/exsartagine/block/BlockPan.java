@@ -60,7 +60,8 @@ public class BlockPan extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!(worldIn.getTileEntity(pos) instanceof TileEntityPan))
+		
+		if(!(worldIn.getTileEntity(pos) instanceof TileEntityPan) || hand == EnumHand.OFF_HAND)
 			return false;
 
 		TileEntityPan pan = (TileEntityPan) worldIn.getTileEntity(pos);
@@ -69,15 +70,23 @@ public class BlockPan extends Block {
 		if(playerIn.getHeldItem(hand).isEmpty() || !(playerIn.getHeldItem(hand).getItem() instanceof ItemFood))
 		{
 			if(!pan.getInventory().getStackInSlot(1).isEmpty()){
-				worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), pan.getInventory().getStackInSlot(1).copy()));
+				if(!worldIn.isRemote)
+					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), pan.getInventory().getStackInSlot(1).copy()));
 				pan.getInventory().setStackInSlot(1, ItemStack.EMPTY);
+			}else{
+				if(!pan.getInventory().getStackInSlot(0).isEmpty()){
+					if(!worldIn.isRemote)
+						worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), pan.getInventory().getStackInSlot(0).copy()));
+					pan.getInventory().setStackInSlot(0, ItemStack.EMPTY);
+				}
 			}
-			return true;
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		}
-
-		if(pan.getInventory().getStackInSlot(0).isEmpty()){
+		
+		else if(pan.getInventory().getStackInSlot(0).isEmpty()){
 			pan.getInventory().setStackInSlot(0, stack.copy());
 			playerIn.setHeldItem(hand, ItemStack.EMPTY);
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		}
 
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
@@ -95,13 +104,13 @@ public class BlockPan extends Block {
 					world.setBlockToAir(pos);
 				}
 
-				if(world.getBlockState(fromPos).getBlock() == Blocks.LIT_FURNACE)
+				else if(world.getBlockState(fromPos).getBlock() == Blocks.LIT_FURNACE)
 				{
 					((TileEntityPan)world.getTileEntity(pos)).setCooking();
 					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 				}
 
-				if(world.getBlockState(fromPos).getBlock() == Blocks.FURNACE)
+				else if(world.getBlockState(fromPos).getBlock() == Blocks.FURNACE)
 				{
 					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
 					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
@@ -109,11 +118,11 @@ public class BlockPan extends Block {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPan)worldIn.getTileEntity(pos)).stopCooking();
+			((TileEntityPan)worldIn.getTileEntity(pos)).setCooking();
 			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 		}
 	}

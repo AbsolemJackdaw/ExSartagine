@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import subaraki.exsartagine.block.ExSartagineBlock;
 
 public class TileEntityPan extends TileEntity implements ITickable {
 
@@ -56,7 +57,7 @@ public class TileEntityPan extends TileEntity implements ITickable {
 		isCooking = false;
 		cookingTime = 0;
 	}
-	
+
 	public boolean isCooking(){
 		return isCooking;
 	}
@@ -71,6 +72,7 @@ public class TileEntityPan extends TileEntity implements ITickable {
 					inventory.setStackInSlot(1, FurnaceRecipes.instance().getSmeltingResult(inventory.getStackInSlot(0).copy()));
 				else
 					inventory.getStackInSlot(1).grow(1);
+				world.notifyBlockUpdate(pos, ExSartagineBlock.pan.getDefaultState(), ExSartagineBlock.pan.getDefaultState(), 3);
 			}
 			cookingTime = 0;
 		}
