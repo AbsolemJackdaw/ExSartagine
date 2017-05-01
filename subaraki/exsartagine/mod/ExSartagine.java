@@ -16,8 +16,6 @@ import subaraki.exsartagine.block.ExSartagineBlock;
 import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
-import subaraki.telepads.handler.ConfigurationHandler;
-import subaraki.telepads.item.TelepadItems;
 
 @Mod(name = ExSartagine.NAME, modid = ExSartagine.MODID, version = ExSartagine.VERSION, dependencies = ExSartagine.DEPENDENCY)
 public class ExSartagine {
