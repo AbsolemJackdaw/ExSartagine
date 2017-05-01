@@ -25,7 +25,7 @@ public class TileEntityPan extends TileEntity implements ITickable {
 	private static final int ENTRY =0;
 
 	private ItemStackHandler inventory = new ItemStackHandler(2);
-	
+
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -66,20 +66,21 @@ public class TileEntityPan extends TileEntity implements ITickable {
 		{
 			if(!world.isRemote)
 			{
-				if(inventory.getStackInSlot(ENTRY).getCount() > 0 && (inventory.getStackInSlot(RESULT).isEmpty() || inventory.getStackInSlot(RESULT).getCount() < inventory.getStackInSlot(RESULT).getMaxStackSize()))
+				if(getFood().getCount() > 0 && 
+						(getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
 				{
-					if(inventory.getStackInSlot(RESULT).isEmpty())
+					if(getResult().isEmpty())
 					{
-						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(inventory.getStackInSlot(ENTRY).copy());
-						itemstack.setCount(1);
+						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getFoodStackOne()).copy();
+						//itemstack.setCount(1);
 						inventory.setStackInSlot(RESULT, itemstack);
 
-						inventory.getStackInSlot(ENTRY).shrink(1);
+						getFood().shrink(1);
 					}
 					else
 					{
-						inventory.getStackInSlot(RESULT).grow(1);
-						inventory.getStackInSlot(ENTRY).shrink(1);
+						getResult().grow(1);
+						getFood().shrink(1);
 					}
 				}
 			}
@@ -87,8 +88,26 @@ public class TileEntityPan extends TileEntity implements ITickable {
 			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), ExSartagineBlock.pan.getDefaultState(), 3);
 		}
 
-		if(isCooking && inventory.getStackInSlot(ENTRY).getCount() > 0)
-			cookingTime++;
+		if(isCooking)
+		{
+			if(getFood().getCount() > 0 && 
+					(getResult().getItem().equals(FurnaceRecipes.instance().getSmeltingResult(getFoodStackOne()).getItem()) || getResult().isEmpty()))
+				cookingTime++;
+			else
+				cookingTime = 0;
+		}
+	}
+
+	private ItemStack getFood(){
+		return inventory.getStackInSlot(ENTRY);
+	}
+	private ItemStack getFoodStackOne(){
+		ItemStack stack = inventory.getStackInSlot(ENTRY).copy();
+		//stack.setCount(1);
+		return stack;
+	}
+	private ItemStack getResult(){
+		return inventory.getStackInSlot(RESULT);
 	}
 
 	/**maxes at 125 to restart from 0*/
