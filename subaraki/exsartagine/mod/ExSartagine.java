@@ -2,6 +2,8 @@ package subaraki.exsartagine.mod;
 
 import java.util.Arrays;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -9,10 +11,13 @@ import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import subaraki.exsartagine.block.ExSartagineBlock;
 import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
+import subaraki.telepads.handler.ConfigurationHandler;
+import subaraki.telepads.item.TelepadItems;
 
 @Mod(name = ExSartagine.NAME, modid = ExSartagine.MODID, version = ExSartagine.VERSION, dependencies = ExSartagine.DEPENDENCY)
 public class ExSartagine {
@@ -46,5 +51,12 @@ public class ExSartagine {
 		proxy.registerRenders();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		
+		////////////////////////////////////////////////////////////////////////
+		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.pan), new Object[]{
+				"xxx","IxS","III",
+				'I',Items.IRON_INGOT,
+				'S',Items.STICK
+		});
 	}
 }
