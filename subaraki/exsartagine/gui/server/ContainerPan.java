@@ -7,8 +7,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.items.SlotItemHandler;
 import subaraki.exsartagine.tileentity.TileEntityPan;
 
 public class ContainerPan extends Container{

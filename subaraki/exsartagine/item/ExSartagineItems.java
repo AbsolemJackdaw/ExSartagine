@@ -3,7 +3,6 @@ package subaraki.exsartagine.item;
 import static lib.item.ItemRegistry.registerItem;
 import static lib.item.ItemRegistry.registerRender;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import subaraki.exsartagine.block.ExSartagineBlock;
