@@ -54,7 +54,7 @@ public class ContainerPan extends Container{
             }
             else if (index != 0)
             {
-                if (!FurnaceRecipes.instance().getSmeltingResult(itemstack1).isEmpty())
+                if (slot instanceof SlotPanInput && ((SlotPanInput)slot).isItemValid(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
