@@ -16,6 +16,5 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void registerTileEntityAndRenderer() {
 		GameRegistry.registerTileEntity(TileEntityPan.class, "tileentityexsartagine");
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPan.class, new TileEntitySpecialRendererPan());
 	}
 }

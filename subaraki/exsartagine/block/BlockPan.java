@@ -63,6 +63,11 @@ public class BlockPan extends Block {
 		
 		if(!(worldIn.getTileEntity(pos) instanceof TileEntityPan) || hand == EnumHand.OFF_HAND)
 			return false;
+		
+		if(playerIn.getHeldItem(hand).isEmpty()){
+			playerIn.openGui(ExSartagine.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			return true;
+		}
 
 		TileEntityPan pan = (TileEntityPan) worldIn.getTileEntity(pos);
 		ItemStack stack = playerIn.getHeldItem(hand);

@@ -1,6 +1,7 @@
 package subaraki.exsartagine.tileentity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -19,6 +20,9 @@ public class TileEntityPan extends TileEntity implements ITickable {
 
 	private boolean isCooking = false;
 	private int cookingTime = 0;
+
+	private static final int RESULT = 1;
+	private static final int ENTRY =0;
 
 	private ItemStackHandler inventory = new ItemStackHandler(2){
 		@Override
@@ -64,20 +68,39 @@ public class TileEntityPan extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if(cookingTime == 200)
+
+		if(cookingTime == 125)
 		{
-			if(inventory.getStackInSlot(1).isEmpty() || inventory.getStackInSlot(1).getCount() < inventory.getStackInSlot(1).getMaxStackSize()){
-				inventory.getStackInSlot(0).shrink(1);
-				if(inventory.getStackInSlot(1).isEmpty())
-					inventory.setStackInSlot(1, FurnaceRecipes.instance().getSmeltingResult(inventory.getStackInSlot(0).copy()));
-				else
-					inventory.getStackInSlot(1).grow(1);
-				world.notifyBlockUpdate(pos, ExSartagineBlock.pan.getDefaultState(), ExSartagineBlock.pan.getDefaultState(), 3);
+			if(!world.isRemote)
+			{
+				if(inventory.getStackInSlot(ENTRY).getCount() > 0 && (inventory.getStackInSlot(RESULT).isEmpty() || inventory.getStackInSlot(RESULT).getCount() < inventory.getStackInSlot(RESULT).getMaxStackSize()))
+				{
+					if(inventory.getStackInSlot(RESULT).isEmpty())
+					{
+						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(inventory.getStackInSlot(ENTRY).copy());
+						itemstack.setCount(1);
+						inventory.setStackInSlot(RESULT, itemstack);
+
+						inventory.getStackInSlot(ENTRY).shrink(1);
+					}
+					else
+					{
+						inventory.getStackInSlot(RESULT).grow(1);
+						inventory.getStackInSlot(ENTRY).shrink(1);
+					}
+				}
 			}
 			cookingTime = 0;
+			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), ExSartagineBlock.pan.getDefaultState(), 3);
 		}
-		if(isCooking && (inventory.getStackInSlot(1).isEmpty() || inventory.getStackInSlot(1).getCount() < inventory.getStackInSlot(1).getMaxStackSize()))
+
+		if(isCooking && inventory.getStackInSlot(ENTRY).getCount() > 0)
 			cookingTime++;
+	}
+
+	/**maxes at 125 to restart from 0*/
+	public int getCookingProgress(){
+		return cookingTime;
 	}
 
 	@Override
