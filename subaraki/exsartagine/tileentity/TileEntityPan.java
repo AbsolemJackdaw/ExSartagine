@@ -24,15 +24,8 @@ public class TileEntityPan extends TileEntity implements ITickable {
 	private static final int RESULT = 1;
 	private static final int ENTRY =0;
 
-	private ItemStackHandler inventory = new ItemStackHandler(2){
-		@Override
-		protected void onContentsChanged(int slot)
-		{
-			super.onContentsChanged(slot);
-			markDirty();
-		}
-	};
-
+	private ItemStackHandler inventory = new ItemStackHandler(2);
+	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

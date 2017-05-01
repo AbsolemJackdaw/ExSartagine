@@ -13,18 +13,25 @@ public class GuiHandler implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return new ContainerPan();
+
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity te = world.getTileEntity(pos);
+
+		if(te instanceof TileEntityPan)
+			return new ContainerPan(player.inventory, (TileEntityPan)te);
+		
+		return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		
+
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
-		
+
 		if(te instanceof TileEntityPan)
 			return new GuiPan(player, (TileEntityPan)te);
-		
+
 		return null;
 	}
 

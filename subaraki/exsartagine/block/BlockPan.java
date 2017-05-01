@@ -60,41 +60,12 @@ public class BlockPan extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		
+
 		if(!(worldIn.getTileEntity(pos) instanceof TileEntityPan) || hand == EnumHand.OFF_HAND)
 			return false;
-		
-		if(playerIn.getHeldItem(hand).isEmpty()){
-			playerIn.openGui(ExSartagine.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
-			return true;
-		}
 
-		TileEntityPan pan = (TileEntityPan) worldIn.getTileEntity(pos);
-		ItemStack stack = playerIn.getHeldItem(hand);
-
-		if(playerIn.getHeldItem(hand).isEmpty() || !(playerIn.getHeldItem(hand).getItem() instanceof ItemFood))
-		{
-			if(!pan.getInventory().getStackInSlot(1).isEmpty()){
-				if(!worldIn.isRemote)
-					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), pan.getInventory().getStackInSlot(1).copy()));
-				pan.getInventory().setStackInSlot(1, ItemStack.EMPTY);
-			}else{
-				if(!pan.getInventory().getStackInSlot(0).isEmpty()){
-					if(!worldIn.isRemote)
-						worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), pan.getInventory().getStackInSlot(0).copy()));
-					pan.getInventory().setStackInSlot(0, ItemStack.EMPTY);
-				}
-			}
-			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-		}
-		
-		else if(pan.getInventory().getStackInSlot(0).isEmpty()){
-			pan.getInventory().setStackInSlot(0, stack.copy());
-			playerIn.setHeldItem(hand, ItemStack.EMPTY);
-			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-		}
-
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		playerIn.openGui(ExSartagine.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 
 	@Override

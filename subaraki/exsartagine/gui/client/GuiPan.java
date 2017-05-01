@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import subaraki.exsartagine.gui.server.ContainerPan;
 import subaraki.exsartagine.tileentity.TileEntityPan;
 
 public class GuiPan extends GuiContainer {
@@ -16,12 +18,13 @@ public class GuiPan extends GuiContainer {
 	private final TileEntityPan pan;
 
 	public GuiPan(EntityPlayer player, TileEntityPan pan) {
-		super(player.inventoryContainer);
+		super(new ContainerPan(player.inventory, pan));
 
 		playerInventory = player.inventory;
 		this.pan = pan;
 	}
 
+	private float fade = 0.2f;
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -30,20 +33,22 @@ public class GuiPan extends GuiContainer {
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-		float progress = pan.getCookingProgress() / 5.6f; //progress max = 125. 125 / 22 = 5.6. 5.6*125 = 22; 22 is texture max
+		fade +=0.05f;
 		if(pan.isCooking())
 		{
 			this.drawTexturedModalRect(i+56, j+53, 176, 28, 16, 16); //furnace lit
 
 			GlStateManager.enableBlend();
-			GlStateManager.color(1f, 1f, 1f, (float)Math.cos((progress)));
+			GlStateManager.color(1f, 1f, 1f, (float)(Math.cos(Math.sin(fade))));
 			this.drawTexturedModalRect(i+57, j+38, 176, 0, 14, 12); //fire
+			GlStateManager.color(1, 1, 1, 1);
 			GlStateManager.disableBlend();
 
 		}
 		else
 			this.drawTexturedModalRect(i+56, j+53, 176, 12, 16, 16); //furnace out
 
+		float progress = pan.getCookingProgress() / 5.6f; //progress max = 125. 125 / 22 = 5.6. 5.6*125 = 22; 22 is texture max
 		this.drawTexturedModalRect(i+80, j+34, 176, 44, (int)progress, 15); //Arrow
 	}
 }
