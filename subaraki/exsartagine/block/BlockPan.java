@@ -2,6 +2,7 @@ package subaraki.exsartagine.block;
 
 import java.util.Random;
 
+import lib.util.InventoryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -32,6 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.mod.ExSartagine;
 import subaraki.exsartagine.tileentity.TileEntityPan;
+import subaraki.exsartagine.tileentity.TileEntitySmelter;
 
 public class BlockPan extends Block {
 
@@ -111,6 +113,19 @@ public class BlockPan extends Block {
         this.setDefaultFacing(worldIn, pos, state);
 	}
 
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	{
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+
+			if (tileentity instanceof TileEntityPan)
+			{
+				InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntityPan)tileentity).getInventory());
+			}
+
+		super.breakBlock(worldIn, pos, state);
+	}
+	
 	/////////////////rendering//////////////
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

@@ -63,7 +63,7 @@ public class TileEntitySmelter extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 
-		if(cookingTime == 200)
+		if(cookingTime == 199)
 		{
 			if(!world.isRemote)
 			{

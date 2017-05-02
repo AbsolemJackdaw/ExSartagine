@@ -2,6 +2,7 @@ package subaraki.exsartagine.mod;
 
 import java.util.Arrays;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +23,7 @@ public class ExSartagine {
 
 	public static final String MODID = "exsartagine";
 	public static final String NAME = "exsartagine mod";
-	public static final String VERSION = "1.11 0.0.0.1";
+	public static final String VERSION = "1.11 0.0.1.0";
 	public static final String DEPENDENCY = "required-after:subcommonlib";
 	
 	@SidedProxy(serverSide = "subaraki.exsartagine.proxy.ServerProxy" , clientSide = "subaraki.exsartagine.proxy.ClientProxy")
@@ -55,6 +56,11 @@ public class ExSartagine {
 				"xxx","IxS","III",
 				'I',Items.IRON_INGOT,
 				'S',Items.STICK
+		});
+		
+		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.pan), new Object[]{
+				"CxC","Cxx","CCC",
+				'C',Blocks.COBBLESTONE
 		});
 	}
 }

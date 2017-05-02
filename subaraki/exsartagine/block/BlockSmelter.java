@@ -2,6 +2,7 @@ package subaraki.exsartagine.block;
 
 import java.util.Random;
 
+import lib.util.InventoryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -111,6 +112,19 @@ public class BlockSmelter extends Block {
 		this.setDefaultFacing(worldIn, pos, state);
 	}
 
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	{
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+
+			if (tileentity instanceof TileEntitySmelter)
+			{
+				InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntitySmelter)tileentity).getInventory());
+			}
+
+		super.breakBlock(worldIn, pos, state);
+	}
+	
 	/////////////////rendering//////////////
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -160,7 +174,7 @@ public class BlockSmelter extends Block {
 		double d4 = 0.27D;
 
 		if(worldIn.getTileEntity(pos) instanceof TileEntitySmelter)
-			if(((TileEntitySmelter)worldIn.getTileEntity(pos)).isCooking()){
+			if(((TileEntitySmelter)worldIn.getTileEntity(pos)).isCooking() && !((TileEntitySmelter)worldIn.getTileEntity(pos)).getInventory().getStackInSlot(0).isEmpty()){
 				for(int i = 0; i < 25; i++)
 				{
 					worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.0D, 0.0D, new int[0]);
