@@ -1,5 +1,6 @@
 package subaraki.exsartagine.block;
 
+import java.util.PropertyResourceBundle;
 import java.util.Random;
 
 import lib.util.InventoryHelper;
@@ -7,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -36,6 +38,7 @@ public class BlockSmelter extends Block {
 
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyBool FULL = PropertyBool.create("full");
 
 	public BlockSmelter() {
 		super(Material.ROCK);
@@ -48,6 +51,8 @@ public class BlockSmelter extends Block {
 		setUnlocalizedName(ExSartagine.MODID+".smelter");
 		setRegistryName("smelter");
 		setHardness(3.5f);
+
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(FULL, false));
 
 	}
 
@@ -115,16 +120,16 @@ public class BlockSmelter extends Block {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+		TileEntity tileentity = worldIn.getTileEntity(pos);
 
-			if (tileentity instanceof TileEntitySmelter)
-			{
-				InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntitySmelter)tileentity).getInventory());
-			}
+		if (tileentity instanceof TileEntitySmelter)
+		{
+			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntitySmelter)tileentity).getInventory());
+		}
 
 		super.breakBlock(worldIn, pos, state);
 	}
-	
+
 	/////////////////rendering//////////////
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -188,26 +193,19 @@ public class BlockSmelter extends Block {
 	}
 
 	/////// TURNING STUFF ////////////////
-	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	{
-		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
-	}
 
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, FACING);
-	}
-	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-	{
-		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+		return new BlockStateContainer(this, FACING, FULL);
 	}
 	@Override
 	public int getMetaFromState(IBlockState state)
 	{
-		return ((EnumFacing)state.getValue(FACING)).getIndex();
+		int i = 0;
+		i = i | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+		i = i | (state.getValue(FULL) ? 1 : 0) << 2;
+		return i;
 	}
 	@Override
 	public IBlockState getStateFromMeta(int meta)
@@ -219,7 +217,7 @@ public class BlockSmelter extends Block {
 			enumfacing = EnumFacing.NORTH;
 		}
 
-		return this.getDefaultState().withProperty(FACING, enumfacing);
+		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(FULL, Boolean.valueOf((meta & 15) > 0));
 	}
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)

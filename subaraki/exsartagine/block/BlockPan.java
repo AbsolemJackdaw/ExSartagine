@@ -192,7 +192,7 @@ public class BlockPan extends Block {
 
 	public int getMetaFromState(IBlockState state)
 	{
-		return ((EnumFacing)state.getValue(FACING)).getIndex();
+		return ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
 	}
 
 	public IBlockState getStateFromMeta(int meta)
