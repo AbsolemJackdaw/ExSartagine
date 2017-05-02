@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "3": "blocks/lava_still"
+    },
+    "elements": [
+        {
+            "name": "lava",
+            "from": [ 2.6, 6.0, 2.6 ], 
+            "to": [ 13.4, 7.0, 13.4 ], 
+            "faces": {
+                "up": { "texture": "#3", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        }
+    ]
+}

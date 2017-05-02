@@ -1,0 +1,28 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=east": {
+            "model": "exsartagine:smelter",
+            "y": 270
+        },
+        "facing=west": {
+            "model": "exsartagine:smelter",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "exsartagine:smelter",
+            "y": 0
+        },
+        "facing=north": {
+            "model": "exsartagine:smelter",
+            "y": 180
+        }
+    },
+    "full": {
+        "full=true":{
+            "model":"exsartagine:lava"
+        },
+         "full=false":{
+        }
+    }
+}
