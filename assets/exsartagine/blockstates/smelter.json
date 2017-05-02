@@ -1,28 +1,29 @@
 {
     "forge_marker": 1,
-    "variants": {
-        "facing=east": {
-            "model": "exsartagine:smelter",
-            "y": 270
-        },
-        "facing=west": {
-            "model": "exsartagine:smelter",
-            "y": 90
-        },
-        "facing=south": {
-            "model": "exsartagine:smelter",
-            "y": 0
-        },
-        "facing=north": {
-            "model": "exsartagine:smelter",
-            "y": 180
-        }
+    "defaults": {
+      "model": "exsartagine:smelter"
     },
-    "full": {
-        "full=true":{
-            "model":"exsartagine:lava"
+    "variants": {
+      "facing": {
+        "east": {
+          "y": 270
         },
-         "full=false":{
+        "west": {
+          "y": 90
+        },
+        "south": {
+          "y": 0
+        },
+        "north": {
+          "y": 180
         }
+      },
+      "full": {
+        "true": {
+          "submodel": "exsartagine:lava"
+        },
+        "false": {
+        }
+      }
     }
-}
+  }

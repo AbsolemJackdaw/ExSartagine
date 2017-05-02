@@ -76,8 +76,8 @@ public class BlockSmelter extends Block {
 		if(!(worldIn.getTileEntity(pos) instanceof TileEntitySmelter) || hand == EnumHand.OFF_HAND)
 			return false;
 
-
 		playerIn.openGui(ExSartagine.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		
 		return true;
 	}
 
@@ -197,7 +197,7 @@ public class BlockSmelter extends Block {
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, FACING, FULL);
+		return new BlockStateContainer(this, FULL, FACING);
 	}
 	@Override
 	public int getMetaFromState(IBlockState state)

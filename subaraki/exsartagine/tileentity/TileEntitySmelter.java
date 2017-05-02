@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import subaraki.exsartagine.block.BlockSmelter;
 import subaraki.exsartagine.block.ExSartagineBlock;
 
 public class TileEntitySmelter extends TileEntity implements ITickable {
@@ -84,7 +85,6 @@ public class TileEntitySmelter extends TileEntity implements ITickable {
 					{
 						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getOreStackOne()).copy();
 						inventory.setStackInSlot(RESULT, itemstack);
-
 						getOre().shrink(1);
 					}
 					else
@@ -105,6 +105,17 @@ public class TileEntitySmelter extends TileEntity implements ITickable {
 				cookingTime++;
 			else
 				cookingTime = 0;
+		}
+		
+		if(!world.isRemote)
+		{
+			//set lava block rendering
+			if(!world.getBlockState(pos).getValue(BlockSmelter.FULL) && (!getResult().isEmpty() || !getBonus().isEmpty()))
+				world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockSmelter.FULL, true), 3);
+			//set lava block gone
+			if(world.getBlockState(pos).getValue(BlockSmelter.FULL) && (getResult().isEmpty() && getBonus().isEmpty()))
+				world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockSmelter.FULL, false), 3);
+	
 		}
 	}
 
