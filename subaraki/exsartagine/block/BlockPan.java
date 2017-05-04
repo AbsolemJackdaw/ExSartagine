@@ -44,13 +44,13 @@ public class BlockPan extends Block {
 		super(Material.IRON);
 
 		setLightLevel(0.0f);
-		setHardness(8f);
 		setSoundType(SoundType.METAL);
 		setCreativeTab(CreativeTabs.TOOLS);
 		setHarvestLevel("pickaxe", 1);
 		setUnlocalizedName(ExSartagine.MODID+".pan");
 		setRegistryName("pan");
 		setHardness(3.5f);
+		this.setLightOpacity(0);
 	}
 
 	@Override
@@ -155,6 +155,18 @@ public class BlockPan extends Block {
 	}
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
 	@SideOnly(Side.CLIENT)

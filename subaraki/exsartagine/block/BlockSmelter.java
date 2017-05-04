@@ -51,7 +51,7 @@ public class BlockSmelter extends Block {
 		setUnlocalizedName(ExSartagine.MODID+".smelter");
 		setRegistryName("smelter");
 		setHardness(3.5f);
-
+		this.setLightOpacity(0);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(FULL, false));
 
 	}
@@ -168,7 +168,18 @@ public class BlockSmelter extends Block {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+	@Override
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
