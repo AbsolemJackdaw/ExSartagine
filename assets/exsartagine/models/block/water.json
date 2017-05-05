@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "1": "blocks/water_still"
+    },
+    "elements": [
+        {
+            "name": "water",
+            "from": [ 4.0, 6.0, 4.0 ], 
+            "to": [ 12.0, 7.0, 12.0 ], 
+            "faces": {
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 8.0 ] }
+            }
+        }
+    ]
+}

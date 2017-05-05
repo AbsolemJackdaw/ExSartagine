@@ -3,6 +3,7 @@ package subaraki.exsartagine.proxy;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.tileentity.TileEntityPan;
+import subaraki.exsartagine.tileentity.TileEntityPot;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 
 public class ClientProxy extends ServerProxy {
@@ -16,6 +17,7 @@ public class ClientProxy extends ServerProxy {
 	public void registerTileEntityAndRenderer() {
 		GameRegistry.registerTileEntity(TileEntityPan.class, "tileentityexsartagine");
 		GameRegistry.registerTileEntity(TileEntitySmelter.class, "tileentityexsartaginesmelter");
+		GameRegistry.registerTileEntity(TileEntityPot.class, "tileentityexsartaginepot");
 
 	}
 }

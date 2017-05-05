@@ -3,6 +3,7 @@ package subaraki.exsartagine.gui.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -31,6 +32,15 @@ public class SlotSmelterInput extends SlotItemHandler {
 						return true;
 					}
 			}
+			
+//			else
+//			{
+//				ItemStack result = FurnaceRecipes.instance().getSmeltingResult(getStack());
+//				if (result.getItem().equals(Items.field_191525_da))
+//				{
+//					return true;
+//				}
+//			}
 		}
 		return false;
 	}

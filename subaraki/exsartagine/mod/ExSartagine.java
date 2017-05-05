@@ -17,6 +17,7 @@ import subaraki.exsartagine.block.ExSartagineBlock;
 import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
+import subaraki.exsartagine.recipe.PotRecipes;
 
 @Mod(name = ExSartagine.NAME, modid = ExSartagine.MODID, version = ExSartagine.VERSION, dependencies = ExSartagine.DEPENDENCY)
 public class ExSartagine {
@@ -63,5 +64,14 @@ public class ExSartagine {
 				'C',Items.IRON_INGOT,
 				'F', Blocks.FURNACE
 		});
+		
+		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.pot), new Object[]{
+				"IxI","CBC","CCC",
+				'I',Items.IRON_INGOT,
+				'C', Blocks.COBBLESTONE,
+				'B', Items.BUCKET
+		});
+		
+		PotRecipes.addRecipe(new ItemStack(Items.EGG,1), new ItemStack(Items.COOKED_CHICKEN,1));
 	}
 }

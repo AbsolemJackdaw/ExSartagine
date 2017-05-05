@@ -2,7 +2,7 @@
     "parent": "block/cube",
     
     "textures": {
-       "0": "blocks/iron_block",
+        "0": "blocks/iron_block",
         "1": "blocks/planks_oak",
         "2": "blocks/cobblestone"
     },

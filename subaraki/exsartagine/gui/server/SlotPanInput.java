@@ -18,7 +18,7 @@ public class SlotPanInput extends SlotItemHandler {
 		{
 			if(stack.getItem() instanceof ItemFood)
 			{
-				if(FurnaceRecipes.instance().getSmeltingResult(stack) != null)
+				if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
 				{
 					return true;
 				}
@@ -26,5 +26,4 @@ public class SlotPanInput extends SlotItemHandler {
 		}
 		return false;
 	}
-	
 }
