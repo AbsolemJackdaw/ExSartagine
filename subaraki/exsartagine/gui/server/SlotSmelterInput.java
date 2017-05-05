@@ -33,14 +33,14 @@ public class SlotSmelterInput extends SlotItemHandler {
 					}
 			}
 			
-//			else
-//			{
-//				ItemStack result = FurnaceRecipes.instance().getSmeltingResult(getStack());
-//				if (result.getItem().equals(Items.field_191525_da))
-//				{
-//					return true;
-//				}
-//			}
+			else
+			{
+				ItemStack result = FurnaceRecipes.instance().getSmeltingResult(getStack());
+				if (result.getItem().equals(Items.field_191525_da))
+				{
+					return true;
+				}
+			}
 		}
 		return false;
 	}

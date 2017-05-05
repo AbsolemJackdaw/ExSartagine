@@ -1,5 +1,6 @@
 package subaraki.exsartagine.gui.server;
 
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -18,9 +19,13 @@ public class SlotPanInput extends SlotItemHandler {
 		{
 			if(stack.getItem() instanceof ItemFood)
 			{
-				if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
+				ItemFood food = (ItemFood)stack.getItem();
+				if(food.getItemUseAction(stack) == EnumAction.EAT && food.getMaxItemUseDuration(stack) > 0)
 				{
-					return true;
+					if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
+					{
+						return true;
+					}
 				}
 			}
 		}
