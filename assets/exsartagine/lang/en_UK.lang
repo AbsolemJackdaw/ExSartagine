@@ -3,3 +3,10 @@ tile.exsartagine.pan.name=Frying Pan
 
 smelter.gui=Smelter
 tile.exsartagine.smelter.name=Smelter
+
+tile.exsartagine.pot.name=Cooking Pot
+pot.gui=Cooking Pot
+
+item.exsartagine.egg.boiled.name=Boiled Egg
+item.exsartagine.beans.boiled.name=Cooked Beans
+item.exsartagine.potato.boiled.name=Cooked Potato

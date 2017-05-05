@@ -1,11 +1,13 @@
 package subaraki.exsartagine.tileentity;
 
+import lib.recipes.PotRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.block.BlockPot;
 import subaraki.exsartagine.block.ExSartagineBlock;
-import subaraki.exsartagine.recipe.PotRecipes;
 
 public class TileEntityPot extends TileEntityCooker{
 
@@ -38,7 +40,7 @@ public class TileEntityPot extends TileEntityCooker{
 					{
 						if(getResult().isEmpty())
 						{
-							ItemStack stack = PotRecipes.getResultFor(getEntryStackOne()).copy();
+							ItemStack stack = PotRecipes.getInstance().getCookingResult(getEntryStackOne()).copy();
 							getInventory().setStackInSlot(RESULT, stack.copy());
 							getEntry().shrink(1);
 						}
@@ -61,7 +63,7 @@ public class TileEntityPot extends TileEntityCooker{
 			if(!getEntry().isEmpty() && 
 					getEntry().getCount() > 0 && 
 					getWaterLevel() > 0 &&
-					(getResult().getItem().equals(PotRecipes.getResultFor(getEntry()).getItem()) 
+					(getResult().getItem().equals(PotRecipes.getInstance().getCookingResult(getEntry()).getItem()) 
 							|| getResult().isEmpty())) //or recipe fits
 			{
 				cookingTime++;

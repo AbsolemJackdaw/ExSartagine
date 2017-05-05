@@ -1,9 +1,9 @@
 package subaraki.exsartagine.gui.server;
 
+import lib.recipes.PotRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import subaraki.exsartagine.recipe.PotRecipes;
 
 public class SlotPotInput extends SlotItemHandler {
 
@@ -15,7 +15,7 @@ public class SlotPotInput extends SlotItemHandler {
 	public boolean isItemValid(ItemStack stack) {
 		if(!stack.isEmpty())
 		{
-			if(!PotRecipes.getCookingResult(stack).isEmpty())
+			if(!PotRecipes.getInstance().getCookingResult(stack).isEmpty())
 			{
 				return true;
 			}

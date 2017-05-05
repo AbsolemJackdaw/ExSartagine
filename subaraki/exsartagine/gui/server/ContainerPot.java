@@ -1,12 +1,12 @@
 package subaraki.exsartagine.gui.server;
 
+import lib.recipes.PotRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import subaraki.exsartagine.recipe.PotRecipes;
 import subaraki.exsartagine.tileentity.TileEntityPot;
 
 public class ContainerPot extends Container{
@@ -53,7 +53,7 @@ public class ContainerPot extends Container{
             }
             else if (index != 0)
             {
-                if (!PotRecipes.getResultFor(itemstack1).isEmpty())
+                if (!PotRecipes.getInstance().getCookingResult(itemstack1).isEmpty())
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {

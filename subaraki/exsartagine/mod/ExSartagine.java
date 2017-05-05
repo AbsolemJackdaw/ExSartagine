@@ -2,6 +2,7 @@ package subaraki.exsartagine.mod;
 
 import java.util.Arrays;
 
+import lib.recipes.PotRecipes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,14 +18,14 @@ import subaraki.exsartagine.block.ExSartagineBlock;
 import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
-import subaraki.exsartagine.recipe.PotRecipes;
+import subaraki.exsartagine.recipe.Recipes;
 
 @Mod(name = ExSartagine.NAME, modid = ExSartagine.MODID, version = ExSartagine.VERSION, dependencies = ExSartagine.DEPENDENCY)
 public class ExSartagine {
 
 	public static final String MODID = "exsartagine";
 	public static final String NAME = "exsartagine mod";
-	public static final String VERSION = "1.11 0.0.1.1";
+	public static final String VERSION = "1.11 0.0.2.0";
 	public static final String DEPENDENCY = "required-after:subcommonlib";
 	
 	@SidedProxy(serverSide = "subaraki.exsartagine.proxy.ServerProxy" , clientSide = "subaraki.exsartagine.proxy.ClientProxy")
@@ -52,26 +53,6 @@ public class ExSartagine {
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		
-		////////////////////////////////////////////////////////////////////////
-		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.pan), new Object[]{
-				"xxx","IxS","III",
-				'I',Items.IRON_INGOT,
-				'S',Items.STICK
-		});
-		
-		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.smelter), new Object[]{
-				"CxC","CFx","CCC",
-				'C',Items.IRON_INGOT,
-				'F', Blocks.FURNACE
-		});
-		
-		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.pot), new Object[]{
-				"IxI","CBC","CCC",
-				'I',Items.IRON_INGOT,
-				'C', Blocks.COBBLESTONE,
-				'B', Items.BUCKET
-		});
-		
-		PotRecipes.addRecipe(new ItemStack(Items.EGG,1), new ItemStack(Items.COOKED_CHICKEN,1));
+		new Recipes();
 	}
 }

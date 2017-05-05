@@ -65,7 +65,7 @@ public class BlockPot extends Block {
 	}
 
 	@Override
-	public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		return false;
 	}
 
@@ -131,7 +131,6 @@ public class BlockPot extends Block {
 			((TileEntityPot)worldIn.getTileEntity(pos)).setCooking();
 			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 		}
-		this.setDefaultFacing(worldIn, pos, state);
 	}
 
 	@Override
@@ -152,10 +151,6 @@ public class BlockPot extends Block {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return AABB;
 	}
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
-	}
 
 	///////////////TE Stuff//////////////////////
 	@Override
@@ -171,10 +166,6 @@ public class BlockPot extends Block {
 	/////////////// MISC //////////////////////
 
 	@Override
-	public boolean isFullyOpaque(IBlockState state) {
-		return false;
-	}
-	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
@@ -184,10 +175,6 @@ public class BlockPot extends Block {
 	}
 	@Override
 	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-	@Override
-	public boolean causesSuffocation(IBlockState state) {
 		return false;
 	}
 	@SideOnly(Side.CLIENT)
@@ -200,13 +187,16 @@ public class BlockPot extends Block {
 		double d4 = 0.27D;
 
 		if(worldIn.getTileEntity(pos) instanceof TileEntityPot)
-			if(((TileEntityPot)worldIn.getTileEntity(pos)).isCooking() && !((TileEntityPot)worldIn.getTileEntity(pos)).getInventory().getStackInSlot(0).isEmpty() && ((TileEntityPot)worldIn.getTileEntity(pos)).getWaterLevel() > 0){
+		{
+			if(((TileEntityPot)worldIn.getTileEntity(pos)).isCooking() && !((TileEntityPot)worldIn.getTileEntity(pos)).getInventory().getStackInSlot(0).isEmpty() && ((TileEntityPot)worldIn.getTileEntity(pos)).getWaterLevel() > 0)
+			{
 				for(int i = 0 ; i < 10 ; i++)
 					worldIn.spawnParticle(EnumParticleTypes.WATER_SPLASH, d0+(RANDOM.nextDouble()/3 - 0.15), d1, d2+(RANDOM.nextDouble()/3 - 0.15), 0.0D, -0.02D, 0.0D, new int[1]);
 
 				worldIn.spawnParticle(EnumParticleTypes.WATER_SPLASH, d0+(RANDOM.nextDouble()/3 - 0.15), d1, d2+(RANDOM.nextDouble()/3 - 0.15), 0.0D, 0.5D, 0.0D, new int[0]);
 				worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.0D, 0.0D, new int[0]);
 			}
+		}
 	}
 
 	/////// TURNING STUFF ////////////////
@@ -221,20 +211,20 @@ public class BlockPot extends Block {
 	{
 		int i = 0;
 		i = i | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
-		i = i | (state.getValue(FULL) ? 1 : 0) << 2;
+		i = i | ((state.getValue(FULL) ? 1 : 0) << 2);
 		return i;
 	}
 	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.getHorizontal(meta & 3);
 
 		if (enumfacing.getAxis() == EnumFacing.Axis.Y)
 		{
 			enumfacing = EnumFacing.NORTH;
 		}
 
-		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(FULL, Boolean.valueOf((meta & 15) > 0));
+		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(FULL, (meta & 4) > 0);
 	}
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
@@ -245,36 +235,5 @@ public class BlockPot extends Block {
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	{
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-	}
-
-	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
-	{
-		if (!worldIn.isRemote)
-		{
-			IBlockState iblockstate = worldIn.getBlockState(pos.north());
-			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-			IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-			EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-
-			if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
-			{
-				enumfacing = EnumFacing.SOUTH;
-			}
-			else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
-			{
-				enumfacing = EnumFacing.NORTH;
-			}
-			else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
-			{
-				enumfacing = EnumFacing.EAST;
-			}
-			else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
-			{
-				enumfacing = EnumFacing.WEST;
-			}
-
-			worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
-		}
 	}
 }

@@ -19,7 +19,7 @@ public class TileEntityPan extends TileEntityCooker{
 	public TileEntityPan() {
 		this.inventory = new ItemStackHandler(2);
 	}
-
+	
 	@Override
 	public void update() {
 
