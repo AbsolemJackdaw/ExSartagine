@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
+import net.minecraftforge.oredict.OreDictionary;
 import subaraki.exsartagine.block.ExSartagineBlock;
 import subaraki.exsartagine.mod.ExSartagine;
 
@@ -30,6 +31,16 @@ public class ExSartagineItems {
 		boiled_potato = (ItemFood) new ItemFood(6, 0.5f,false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".potato.boiled").setRegistryName("potato.boiled");
 
 		register();
+		
+		addToOreDict();
+	}
+
+	private static void addToOreDict() {
+		OreDictionary.registerOre("egg", boiled_egg);
+		OreDictionary.registerOre("ingredientEgg", boiled_egg);
+		OreDictionary.registerOre("vegetable", boiled_potato);
+		OreDictionary.registerOre("vegetable", boiled_beans);
+
 	}
 
 	private static void register() {
