@@ -16,8 +16,6 @@ public class TileEntityRangeExtension extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		
-		System.out.println(!world.isRemote + " " + isCooking);
 	}
 	
 	public void setCooking(boolean isCooking) {
