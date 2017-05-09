@@ -68,6 +68,7 @@ public class BlockRangeExtension extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
+		worldIn.notifyBlockUpdate(pos, state, state, 3);
 		//		if(!(worldIn.getTileEntity(pos) instanceof TileEntitySmelter) || hand == EnumHand.OFF_HAND)
 		//			return false;
 		//
@@ -89,7 +90,7 @@ public class BlockRangeExtension extends Block {
 			world.setBlockToAir(pos);
 			return;
 		}
-		
+
 		else if(world.getTileEntity(pos) instanceof TileEntityRangeExtension)
 		{
 			TileEntityRangeExtension tere = (TileEntityRangeExtension)world.getTileEntity(pos);
@@ -135,7 +136,7 @@ public class BlockRangeExtension extends Block {
 			if(range instanceof TileEntityRange)
 				((TileEntityRange)range).disconnect(pos);
 		}
-		
+
 		super.breakBlock(worldIn, pos, state);
 	}
 
@@ -181,16 +182,32 @@ public class BlockRangeExtension extends Block {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
 		double d0 = (double)pos.getX() + 0.5D;
-		double d1 = (double)pos.getY() + 1.5D;
+		double d1 = (double)pos.getY() + 0.3D;
 		double d2 = (double)pos.getZ() + 0.5D;
-		double d3 = 0.22D;
-		double d4 = 0.27D;
 
 		if(worldIn.getTileEntity(pos) instanceof TileEntityRangeExtension)
 		{
 			TileEntityRangeExtension tere = ((TileEntityRangeExtension)worldIn.getTileEntity(pos));
+			System.out.println(tere.isCooking());
 			if(tere.isCooking()){
-				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.05D, 0.0D, new int[0]);
+
+				EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
+				switch (enumfacing) {
+				case NORTH:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.3, d1, d2+0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case WEST:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.6, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case SOUTH:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.3, d1, d2-0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case EAST:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.6, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}

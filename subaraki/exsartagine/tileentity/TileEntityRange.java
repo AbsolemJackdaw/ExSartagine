@@ -38,9 +38,8 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		if(fuelTimer > 0)
 			fuelTimer--;
 
-		boolean hasChanges = false;
-		if(!world.isRemote){
 
+		if(!world.isRemote){
 			//look for fuel if we ran out is present
 			if(fuelTimer == 0)
 			{
@@ -53,7 +52,9 @@ public class TileEntityRange extends TileEntity implements ITickable {
 						isCooking = true;
 						setRangeConnectionsCooking(true);
 						inventory.getStackInSlot(i).shrink(1);
-						hasChanges = true;
+						markDirty();
+						IBlockState state = world.getBlockState(getPos());
+						world.notifyBlockUpdate(getPos(), state, state, 3);
 						break;
 					}
 				}
@@ -64,12 +65,11 @@ public class TileEntityRange extends TileEntity implements ITickable {
 			{
 				isCooking = false;
 				setRangeConnectionsCooking(false);
-				hasChanges = true;
+				IBlockState state = world.getBlockState(getPos());
+				world.notifyBlockUpdate(getPos(), state, state, 3);
+				markDirty();
 			}
 		}
-		
-		if(hasChanges)
-			world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 	}
 
 	public boolean isFueled() {
@@ -162,8 +162,8 @@ public class TileEntityRange extends TileEntity implements ITickable {
 				copy.add(saved);
 			}
 			connected = copy;
-			markDirty();
 		}
+		markDirty();
 	}
 
 	public void setRangeConnectionsCooking(boolean setCooking){
@@ -173,13 +173,17 @@ public class TileEntityRange extends TileEntity implements ITickable {
 			{
 				TileEntity te = world.getTileEntity(posTere);
 				if(te instanceof TileEntityRangeExtension){
-					((TileEntityRangeExtension)te).setCooking(setCooking);
+					TileEntityRangeExtension tere = ((TileEntityRangeExtension)te);
+					tere.setCooking(setCooking);
+					tere.markDirty();
+
 					IBlockState state = world.getBlockState(posTere);
 					IBlockState copy = state.withProperty(BlockRange.FACING, state.getValue(BlockRange.FACING)).withProperty(BlockRangeExtension.ENDBLOCK, state.getValue(BlockRangeExtension.ENDBLOCK));
-				
+
 					//hacky, wrong way of updating correct blockstate, and notifying pots and pans
 					world.setBlockState(posTere, ExSartagineBlock.range_extension.getDefaultState());
 					world.setBlockState(posTere, copy);
+					
 				}
 			}
 		}

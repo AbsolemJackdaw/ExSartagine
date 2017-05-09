@@ -5,14 +5,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityRangeExtension extends TileEntity  {
+public class TileEntityRangeExtension extends TileEntity implements ITickable {
 
 	private boolean isCooking;
 	private BlockPos parentRange;
 
+	@Override
+	public void update() {
+	}
+	
 	public void setCooking(boolean isCooking) {
 		this.isCooking = isCooking;
 		markDirty();
