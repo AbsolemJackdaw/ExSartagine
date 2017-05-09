@@ -5,19 +5,19 @@
          },
         "facing=east": {
             "model": "exsartagine:pan",
-            "y": 0
+            "y": 90
         },
         "facing=west": {
             "model": "exsartagine:pan",
-            "y": 180
+            "y": 270
         },
         "facing=south": {
             "model": "exsartagine:pan",
-            "y": 90
+            "y": 180
         },
         "facing=north": {
             "model": "exsartagine:pan",
-            "y": 270
+            "y": 0
         }
     }
 }

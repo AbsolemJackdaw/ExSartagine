@@ -29,6 +29,13 @@ public class Recipes {
 				'B', Items.BUCKET
 		});
 		
+		GameRegistry.addRecipe(new ItemStack(ExSartagineItems.range), new Object[]{
+				"IxI","IMI","CCC",
+				'I',Items.IRON_INGOT,
+				'C', Blocks.IRON_BLOCK,
+				'M', Blocks.MAGMA
+		});
+		
 		PotRecipes.getInstance().addRecipe(new ItemStack(Items.EGG,1), new ItemStack(ExSartagineItems.boiled_egg,1));
 		PotRecipes.getInstance().addRecipe(new ItemStack(Items.BEETROOT_SEEDS,1), new ItemStack(ExSartagineItems.boiled_beans,1));
 		PotRecipes.getInstance().addRecipe(new ItemStack(Items.POTATO,1), new ItemStack(ExSartagineItems.boiled_potato,1));

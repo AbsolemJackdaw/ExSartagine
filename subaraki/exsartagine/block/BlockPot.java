@@ -54,8 +54,9 @@ public class BlockPot extends Block {
 
 	@Override
 	public boolean canPlaceBlockAt(World world, BlockPos pos) {
-		if(world.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE || world.getBlockState(pos.down()).getBlock() == Blocks.FURNACE){
-			return true;
+		Block blockDown = world.getBlockState(pos.down()).getBlock();
+		if(blockDown == Blocks.LIT_FURNACE ||blockDown == Blocks.FURNACE || blockDown == ExSartagineBlock.range_extension){
+					return true;
 		}
 		return false;
 	}

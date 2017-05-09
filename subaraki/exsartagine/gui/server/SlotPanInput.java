@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class SlotPanInput extends SlotItemHandler {
 
@@ -17,15 +18,20 @@ public class SlotPanInput extends SlotItemHandler {
 	public boolean isItemValid(ItemStack stack) {
 		if(!stack.isEmpty())
 		{
-			if(stack.getItem() instanceof ItemFood)
+			boolean flag = false;
+        	int[] ids = OreDictionary.getOreIDs(stack);
+        	for(int id: ids)
+        		if(OreDictionary.getOreName(id).contains("food")){
+        			flag = true;
+        			break;
+        		}
+        	
+			if(stack.getItem() instanceof ItemFood || flag)
 			{
 				ItemFood food = (ItemFood)stack.getItem();
-				if(food.getItemUseAction(stack) == EnumAction.EAT && food.getMaxItemUseDuration(stack) > 0)
+				if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
 				{
-					if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}

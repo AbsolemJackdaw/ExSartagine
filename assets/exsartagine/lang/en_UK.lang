@@ -7,6 +7,9 @@ tile.exsartagine.smelter.name=Smelter
 tile.exsartagine.pot.name=Cooking Pot
 pot.gui=Cooking Pot
 
+range.gui=Cooking Range
+tile.exsartagine.range.name=Cooking Range
+
 item.exsartagine.egg.boiled.name=Boiled Egg
 item.exsartagine.beans.boiled.name=Cooked Beans
 item.exsartagine.potato.boiled.name=Cooked Potato

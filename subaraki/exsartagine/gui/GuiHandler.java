@@ -7,12 +7,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import subaraki.exsartagine.gui.client.GuiPan;
 import subaraki.exsartagine.gui.client.GuiPot;
+import subaraki.exsartagine.gui.client.GuiRange;
 import subaraki.exsartagine.gui.client.GuiSmelter;
 import subaraki.exsartagine.gui.server.ContainerPan;
 import subaraki.exsartagine.gui.server.ContainerPot;
+import subaraki.exsartagine.gui.server.ContainerRange;
 import subaraki.exsartagine.gui.server.ContainerSmelter;
 import subaraki.exsartagine.tileentity.TileEntityPan;
 import subaraki.exsartagine.tileentity.TileEntityPot;
+import subaraki.exsartagine.tileentity.TileEntityRange;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 
 public class GuiHandler implements IGuiHandler {
@@ -29,6 +32,8 @@ public class GuiHandler implements IGuiHandler {
 			return new ContainerSmelter(player.inventory, (TileEntitySmelter)te);
 		if(te instanceof TileEntityPot && ID == 2)
 			return new ContainerPot(player.inventory, (TileEntityPot)te);
+		if(te instanceof TileEntityRange && ID == 3)
+			return new ContainerRange(player.inventory, (TileEntityRange)te);
 		
 		return null;
 	}
@@ -45,6 +50,8 @@ public class GuiHandler implements IGuiHandler {
 			return new GuiSmelter(player, (TileEntitySmelter)te);
 		if(te instanceof TileEntityPot && ID == 2)
 			return new GuiPot(player, (TileEntityPot)te);
+		if(te instanceof TileEntityRange && ID == 3)
+			return new GuiRange(player, (TileEntityRange)te);
 		
 		return null;
 	}

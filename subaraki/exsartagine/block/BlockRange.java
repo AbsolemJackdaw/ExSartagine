@@ -26,34 +26,30 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.mod.ExSartagine;
-import subaraki.exsartagine.tileentity.TileEntityPan;
+import subaraki.exsartagine.tileentity.TileEntityRange;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 
-public class BlockPan extends Block {
+public class BlockRange extends Block {
 
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);
+	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.9375D, 1.0D);
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-	public BlockPan() {
+	public BlockRange() {
 		super(Material.IRON);
 
 		setLightLevel(0.0f);
 		setSoundType(SoundType.METAL);
 		setCreativeTab(CreativeTabs.TOOLS);
 		setHarvestLevel("pickaxe", 1);
-		setUnlocalizedName(ExSartagine.MODID+".pan");
-		setRegistryName("pan");
+		setUnlocalizedName(ExSartagine.MODID+".range");
+		setRegistryName("range");
 		setHardness(3.5f);
 		this.setLightOpacity(0);
 	}
 
 	@Override
 	public boolean canPlaceBlockAt(World world, BlockPos pos) {
-		Block blockDown = world.getBlockState(pos.down()).getBlock();
-		if(blockDown == Blocks.LIT_FURNACE ||blockDown == Blocks.FURNACE || blockDown == ExSartagineBlock.range_extension){
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -65,52 +61,33 @@ public class BlockPan extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-		if(!(worldIn.getTileEntity(pos) instanceof TileEntityPan) || hand == EnumHand.OFF_HAND)
+		if(!(worldIn.getTileEntity(pos) instanceof TileEntityRange) || hand == EnumHand.OFF_HAND)
 			return false;
 
-		playerIn.openGui(ExSartagine.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ExSartagine.instance, 3, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
 	{
+		EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+		BlockPos nextTo = pos.offset(enumfacing.rotateYCCW());
 
-		if(world.getTileEntity(pos) instanceof TileEntityPan){
-			if(fromPos.up().equals(pos)){ //if the block is beneath us
-				Block down = world.getBlockState(fromPos).getBlock();
-				
-				if(down == Blocks.AIR)
-				{
-					dropBlockAsItem(world, pos, getDefaultState(), 0);
-					world.setBlockToAir(pos);
-				}
+		if(world.getBlockState(nextTo).getBlock() == Blocks.FURNACE){
+			world.setBlockToAir(nextTo);
+			world.setBlockState(nextTo, ExSartagineBlock.range_extension.getDefaultState().withProperty(BlockRangeExtension.FACING, enumfacing));
 
-				else if(down == Blocks.LIT_FURNACE)
-				{
-					((TileEntityPan)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
+			if(world.getTileEntity(nextTo) instanceof TileEntityRangeExtension)
+			{
+				TileEntityRangeExtension tere = (TileEntityRangeExtension)world.getTileEntity(nextTo);
+				tere.setParentRange(pos);
 
-				else if(down == Blocks.FURNACE)
+				if(world.getTileEntity(pos) instanceof TileEntityRange)
 				{
-					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-				else if (down == ExSartagineBlock.range_extension){
-					if(world.getTileEntity(fromPos) instanceof TileEntityRangeExtension)
-					{
-						if(((TileEntityRangeExtension)world.getTileEntity(fromPos)).isCooking())
-						{
-							((TileEntityPan)world.getTileEntity(pos)).setCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-						else
-						{
-							((TileEntityPan)world.getTileEntity(pos)).stopCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-					}
+					TileEntityRange range = (TileEntityRange)world.getTileEntity(pos);
+					if(range.canConnect())
+						range.connect(tere);
 				}
 			}
 		}
@@ -118,10 +95,6 @@ public class BlockPan extends Block {
 
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPan)worldIn.getTileEntity(pos)).setCooking();
-			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-		}
 	}
 
 	@Override
@@ -129,9 +102,9 @@ public class BlockPan extends Block {
 	{
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 
-		if (tileentity instanceof TileEntityPan)
+		if (tileentity instanceof TileEntityRange)
 		{
-			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntityPan)tileentity).getInventory());
+			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntityRange)tileentity).getInventory());
 		}
 
 		super.breakBlock(worldIn, pos, state);
@@ -151,7 +124,7 @@ public class BlockPan extends Block {
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityPan();
+		return new TileEntityRange();
 	}
 
 	/////////////// MISC //////////////////////
@@ -172,17 +145,30 @@ public class BlockPan extends Block {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
 		double d0 = (double)pos.getX() + 0.5D;
-		double d1 = (double)pos.getY() + 0.15D;
+		double d1 = (double)pos.getY() + 1.5D;
 		double d2 = (double)pos.getZ() + 0.5D;
-		double d3 = 0.22D;
-		double d4 = 0.27D;
 
-		if(worldIn.getTileEntity(pos) instanceof TileEntityPan)
+		if(worldIn.getTileEntity(pos) instanceof TileEntityRange)
 		{
-			if(((TileEntityPan)worldIn.getTileEntity(pos)).isCooking())
+			if(((TileEntityRange)worldIn.getTileEntity(pos)).isFueled())
 			{
-				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+(RANDOM.nextDouble()/1.5 - 0.35), d1, d2+(RANDOM.nextDouble()/1.5 - 0.35), 0.0D, 0.0D, 0.0D, new int[0]);
-				worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+(RANDOM.nextDouble()/1.5 - 0.35), d1, d2+(RANDOM.nextDouble()/1.5 - 0.35), 0.0D, 0.0D, 0.0D, new int[0]);
+				EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
+				switch (enumfacing) {
+				case NORTH:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.3, d1, d2+0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case WEST:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.3, d1, d2-0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case SOUTH:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.3, d1, d2-0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				case EAST:
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.3, d1, d2+0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
