@@ -184,6 +184,7 @@ public class TileEntityRange extends TileEntity implements ITickable {
 					world.setBlockState(posTere, ExSartagineBlock.range_extension.getDefaultState());
 					world.setBlockState(posTere, copy);
 					
+					world.notifyBlockUpdate(posTere, state, state, 3);
 				}
 			}
 		}
