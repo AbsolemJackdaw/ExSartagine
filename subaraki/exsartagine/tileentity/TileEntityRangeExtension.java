@@ -14,9 +14,8 @@ public class TileEntityRangeExtension extends TileEntity  {
 	private BlockPos parentRange;
 
 	public void setCooking(boolean isCooking) {
-		markDirty();
-		world.notifyBlockUpdate(getPos(), world.getBlockState(getPos()), world.getBlockState(getPos()), 3);
 		this.isCooking = isCooking;
+		markDirty();
 	}
 
 	public boolean isCooking() {

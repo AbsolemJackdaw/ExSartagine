@@ -181,23 +181,16 @@ public class BlockRangeExtension extends Block {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
 		double d0 = (double)pos.getX() + 0.5D;
-		double d1 = (double)pos.getY() + 1.0D;
+		double d1 = (double)pos.getY() + 1.5D;
 		double d2 = (double)pos.getZ() + 0.5D;
 		double d3 = 0.22D;
 		double d4 = 0.27D;
 
 		if(worldIn.getTileEntity(pos) instanceof TileEntityRangeExtension)
 		{
-			if(((TileEntityRangeExtension)worldIn.getTileEntity(pos)).isCooking())
-			{
-				for(int i = 0; i < 25; i++)
-				{
-					worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.0D, 0.0D, new int[0]);
-					worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.02D, 0.0D, new int[0]);
-
-					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.0D, 0.0D, new int[0]);
-				}
-				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+(RANDOM.nextDouble()/5 - 0.1), d1, d2+(RANDOM.nextDouble()/5 - 0.1), 0.0D, 0.05D, 0.0D, new int[0]);
+			TileEntityRangeExtension tere = ((TileEntityRangeExtension)worldIn.getTileEntity(pos));
+			if(tere.isCooking()){
+				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.05D, 0.0D, new int[0]);
 			}
 		}
 	}

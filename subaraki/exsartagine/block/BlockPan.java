@@ -117,10 +117,20 @@ public class BlockPan extends Block {
 	}
 
 	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPan)worldIn.getTileEntity(pos)).setCooking();
-			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+		if(world.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
+			((TileEntityPan)world.getTileEntity(pos)).setCooking();
+			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+		}
+		if (world.getBlockState(pos.down()).getBlock() == ExSartagineBlock.range_extension){
+			if(world.getTileEntity(pos.down()) instanceof TileEntityRangeExtension)
+			{
+				if(((TileEntityRangeExtension)world.getTileEntity(pos.down())).isCooking())
+				{
+					((TileEntityPan)world.getTileEntity(pos)).setCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+				}
+			}
 		}
 	}
 

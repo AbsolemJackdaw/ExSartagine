@@ -29,6 +29,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.mod.ExSartagine;
 import subaraki.exsartagine.tileentity.TileEntityPot;
+import subaraki.exsartagine.tileentity.TileEntityPot;
+import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 
 public class BlockPot extends Block {
 
@@ -56,7 +58,7 @@ public class BlockPot extends Block {
 	public boolean canPlaceBlockAt(World world, BlockPos pos) {
 		Block blockDown = world.getBlockState(pos.down()).getBlock();
 		if(blockDown == Blocks.LIT_FURNACE ||blockDown == Blocks.FURNACE || blockDown == ExSartagineBlock.range_extension){
-					return true;
+			return true;
 		}
 		return false;
 	}
@@ -95,13 +97,14 @@ public class BlockPot extends Block {
 
 		if(world.getTileEntity(pos) instanceof TileEntityPot){
 			if(fromPos.up().equals(pos)){ //if the block is beneath us
-				if(world.getBlockState(fromPos).getBlock() == Blocks.AIR)
+				Block down = world.getBlockState(fromPos).getBlock();
+				if(down == Blocks.AIR)
 				{
 					dropBlockAsItem(world, pos, getDefaultState(), 0);
 					world.setBlockToAir(pos);
 				}
 
-				else if(world.getBlockState(fromPos).getBlock() == Blocks.LIT_FURNACE)
+				else if(down == Blocks.LIT_FURNACE)
 				{
 					if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
 					{
@@ -110,7 +113,7 @@ public class BlockPot extends Block {
 					}
 				}
 
-				else if(world.getBlockState(fromPos).getBlock() == Blocks.FURNACE)
+				else if(down == Blocks.FURNACE)
 				{
 					if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
 					{
@@ -118,15 +121,41 @@ public class BlockPot extends Block {
 						world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 					}
 				}
+				else if (down == ExSartagineBlock.range_extension){
+					if(world.getTileEntity(fromPos) instanceof TileEntityRangeExtension)
+					{
+						if(((TileEntityRangeExtension)world.getTileEntity(fromPos)).isCooking())
+						{
+							((TileEntityPot)world.getTileEntity(pos)).setCooking();
+							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+						}
+						else
+						{
+							((TileEntityPot)world.getTileEntity(pos)).stopCooking();
+							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+						}
+					}
+				}
 			}
 		}
 	}
 
 	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		if(worldIn.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPot)worldIn.getTileEntity(pos)).setCooking();
-			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+		if(world.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
+			((TileEntityPot)world.getTileEntity(pos)).setCooking();
+			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+		}
+		
+		if (world.getBlockState(pos.down()).getBlock() == ExSartagineBlock.range_extension){
+			if(world.getTileEntity(pos.down()) instanceof TileEntityRangeExtension)
+			{
+				if(((TileEntityRangeExtension)world.getTileEntity(pos.down())).isCooking())
+				{
+					((TileEntityPot)world.getTileEntity(pos)).setCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+				}
+			}
 		}
 	}
 
