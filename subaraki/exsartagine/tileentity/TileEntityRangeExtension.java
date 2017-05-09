@@ -16,11 +16,12 @@ public class TileEntityRangeExtension extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
+		
+		System.out.println(!world.isRemote + " " + isCooking);
 	}
 	
 	public void setCooking(boolean isCooking) {
 		this.isCooking = isCooking;
-		markDirty();
 	}
 
 	public boolean isCooking() {
@@ -46,7 +47,7 @@ public class TileEntityRangeExtension extends TileEntity implements ITickable {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		isCooking = compound.getBoolean("isCooking");
+		isCooking = compound.getBoolean("cooking");
 		parentRange = BlockPos.fromLong(compound.getLong("parent"));
 	}
 

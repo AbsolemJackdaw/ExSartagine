@@ -188,19 +188,18 @@ public class BlockRangeExtension extends Block {
 		if(worldIn.getTileEntity(pos) instanceof TileEntityRangeExtension)
 		{
 			TileEntityRangeExtension tere = ((TileEntityRangeExtension)worldIn.getTileEntity(pos));
-			System.out.println(tere.isCooking());
 			if(tere.isCooking()){
 
 				EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
 				switch (enumfacing) {
 				case NORTH:
-					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.3, d1, d2+0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2-0.6, 0.0D, 0.0D, 0.0D, new int[0]);
 					break;
 				case WEST:
 					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.6, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 					break;
 				case SOUTH:
-					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0-0.3, d1, d2-0.3, 0.0D, 0.0D, 0.0D, new int[0]);
+					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2+0.6, 0.0D, 0.0D, 0.0D, new int[0]);
 					break;
 				case EAST:
 					worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.6, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
