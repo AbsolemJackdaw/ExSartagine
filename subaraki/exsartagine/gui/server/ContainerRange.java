@@ -7,6 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import subaraki.exsartagine.tileentity.TileEntityRange;
 
@@ -59,7 +60,7 @@ public class ContainerRange extends Container {
             }
             else if (index >= 9)
             {
-                if (GameRegistry.getFuelValue(itemstack1) > 0)
+                if (TileEntityFurnace.getItemBurnTime(itemstack1) > 0)
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 9, false))
                     {

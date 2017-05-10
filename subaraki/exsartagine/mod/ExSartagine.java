@@ -49,5 +49,6 @@ public class ExSartagine {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		
 		new Recipes();
+		
 	}
 }

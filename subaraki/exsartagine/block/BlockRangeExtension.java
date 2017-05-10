@@ -50,7 +50,7 @@ public class BlockRangeExtension extends Block {
 		setRegistryName("range_extended");
 		setHardness(3.5f);
 		this.setLightOpacity(0);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ENDBLOCK, true));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.SOUTH).withProperty(ENDBLOCK, false));
 
 	}
 
@@ -67,13 +67,6 @@ public class BlockRangeExtension extends Block {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
-		worldIn.notifyBlockUpdate(pos, state, state, 3);
-		//		if(!(worldIn.getTileEntity(pos) instanceof TileEntitySmelter) || hand == EnumHand.OFF_HAND)
-		//			return false;
-		//
-		//		playerIn.openGui(ExSartagine.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
-
 		return false;
 	}
 
@@ -110,6 +103,7 @@ public class BlockRangeExtension extends Block {
 						if(te instanceof TileEntityRangeExtension)
 						{
 							((TileEntityRangeExtension)te).setParentRange(tere.getParentRange());
+							((TileEntityRangeExtension)te).setCooking(tere.isCooking());
 							range.connect(((TileEntityRangeExtension)te));
 						}
 					}

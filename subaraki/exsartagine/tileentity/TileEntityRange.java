@@ -28,8 +28,11 @@ public class TileEntityRange extends TileEntity implements ITickable {
 
 	private List<BlockPos> connected = new ArrayList<BlockPos>();
 
+	/**wether or not this range is fueling connected entries*/
 	private boolean isCooking;
+	/**how much 'cooktime' from the item inserted is left*/
 	private int fuelTimer = 0;
+	/**used in gui for image drawing*/
 	private int maxFuelTimer = 0;
 
 	@Override
@@ -50,9 +53,11 @@ public class TileEntityRange extends TileEntity implements ITickable {
 					{
 						maxFuelTimer = fuelTimer = TileEntityFurnace.getItemBurnTime(stack);
 						isCooking = true;
-						setRangeConnectionsCooking(true);
+						setRangeConnectionsCooking(isCooking);
+						//shrink after getting fuel timer, or when stack was 1, fueltimer cannot get timer from stack 0
 						inventory.getStackInSlot(i).shrink(1);
 						markDirty();
+						//sync to client
 						IBlockState state = world.getBlockState(getPos());
 						world.notifyBlockUpdate(getPos(), state, state, 3);
 						break;
@@ -136,7 +141,10 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		NBTTagCompound connections = compound.getCompoundTag("connections");
 		for (int i = 0; i < 4; i++)
 			if(connections.hasKey(String.valueOf(i)))
-				connected.add(BlockPos.fromLong(connections.getLong(String.valueOf(i))));
+			{
+				BlockPos pos = BlockPos.fromLong(connections.getLong(String.valueOf(i)));
+				connected.add(pos);
+			}
 	}
 
 	public boolean canConnect(){
@@ -178,11 +186,10 @@ public class TileEntityRange extends TileEntity implements ITickable {
 					tere.markDirty();
 
 					IBlockState state = world.getBlockState(posTere);
-					IBlockState copy = state.withProperty(BlockRange.FACING, state.getValue(BlockRange.FACING)).withProperty(BlockRangeExtension.ENDBLOCK, state.getValue(BlockRangeExtension.ENDBLOCK));
 
 					//hacky, wrong way of updating correct blockstate, and notifying pots and pans
 					world.setBlockState(posTere, ExSartagineBlock.range_extension.getDefaultState());
-					world.setBlockState(posTere, copy);
+					world.setBlockState(posTere, state);
 					
 					world.notifyBlockUpdate(posTere, state, state, 3);
 				}
