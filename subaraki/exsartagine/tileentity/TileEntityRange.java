@@ -15,11 +15,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import subaraki.exsartagine.block.BlockRange;
-import subaraki.exsartagine.block.BlockRangeExtension;
 import subaraki.exsartagine.block.ExSartagineBlock;
 
 public class TileEntityRange extends TileEntity implements ITickable {

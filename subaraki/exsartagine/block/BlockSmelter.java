@@ -28,8 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.mod.ExSartagine;
-import subaraki.exsartagine.tileentity.TileEntitySmelter;
-import subaraki.exsartagine.tileentity.TileEntitySmelter;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 

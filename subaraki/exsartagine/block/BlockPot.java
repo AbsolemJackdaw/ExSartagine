@@ -29,7 +29,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.mod.ExSartagine;
 import subaraki.exsartagine.tileentity.TileEntityPot;
-import subaraki.exsartagine.tileentity.TileEntityPot;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 
 public class BlockPot extends Block {

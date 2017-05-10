@@ -1,6 +1,5 @@
 package subaraki.exsartagine.gui.server;
 
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
