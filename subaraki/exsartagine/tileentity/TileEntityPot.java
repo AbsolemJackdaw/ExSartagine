@@ -1,6 +1,9 @@
 package subaraki.exsartagine.tileentity;
 
 import lib.recipes.PotRecipes;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemStackHandler;
@@ -39,12 +42,24 @@ public class TileEntityPot extends TileEntityCooker{
 						if(getResult().isEmpty())
 						{
 							ItemStack stack = PotRecipes.getInstance().getCookingResult(getEntryStackOne()).copy();
+							
+							if(getEntry().getItem() instanceof ItemBlock && getEntry().getItem() == Item.getItemFromBlock(Blocks.STONE))
+							{
+								stack = world.rand.nextInt(5) == 0 ? ItemStack.EMPTY : stack;
+							}
+							
 							getInventory().setStackInSlot(RESULT, stack.copy());
 							getEntry().shrink(1);
 						}
 						else
 						{
-							getResult().grow(1);
+							if(getEntry().getItem() instanceof ItemBlock && getEntry().getItem() == Item.getItemFromBlock(Blocks.STONE))
+							{
+								getResult().grow(world.rand.nextInt(5) == 0 ? 1 : 0); 
+							}
+							else
+								getResult().grow(1);
+							
 							getEntry().shrink(1);
 						}
 					}

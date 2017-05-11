@@ -27,6 +27,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.mod.ExSartagine;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
@@ -43,7 +44,7 @@ public class BlockSmelter extends Block {
 		setLightLevel(0.0f);
 		setHardness(8f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabs.TOOLS);
+		setCreativeTab(ExSartagineItems.pots);
 		setHarvestLevel("pickaxe", 1);
 		setUnlocalizedName(ExSartagine.MODID+".smelter");
 		setRegistryName("smelter");

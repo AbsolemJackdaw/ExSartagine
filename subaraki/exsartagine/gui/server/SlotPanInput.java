@@ -24,10 +24,8 @@ public class SlotPanInput extends SlotItemHandler {
         			flag = true;
         			break;
         		}
-        	
 			if(stack.getItem() instanceof ItemFood || flag)
 			{
-				ItemFood food = (ItemFood)stack.getItem();
 				if(!FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty())
 				{
 					return true;

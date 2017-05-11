@@ -20,7 +20,7 @@ public class ExSartagine {
 
 	public static final String MODID = "exsartagine";
 	public static final String NAME = "exsartagine mod";
-	public static final String VERSION = "1.11.2 0.0.2.1";
+	public static final String VERSION = "1.11.2 0.0.3.0";
 	public static final String DEPENDENCY = "required-after:subcommonlib";
 	
 	@SidedProxy(serverSide = "subaraki.exsartagine.proxy.ServerProxy" , clientSide = "subaraki.exsartagine.proxy.ClientProxy")
