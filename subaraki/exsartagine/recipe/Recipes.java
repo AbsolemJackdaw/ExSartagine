@@ -126,6 +126,11 @@ public class Recipes {
 				"foodRedMeatRaw"
 				));
 		
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ExSartagineItems.pizza_meat_raw), 
+				ExSartagineItems.pizza_plain,
+				"portionMeat","portionMeat"
+				));
+		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ExSartagineItems.pizza_chicken_raw), 
 				ExSartagineItems.pizza_plain,
 				Items.CHICKEN
@@ -134,6 +139,11 @@ public class Recipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ExSartagineItems.pizza_fish_raw), 
 				ExSartagineItems.pizza_plain,
 				"foodFishRaw"
+				));
+		
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ExSartagineItems.pizza_fish_raw), 
+				ExSartagineItems.pizza_plain,
+				"portionFish", "portionFish"
 				));
 		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ExSartagineItems.pizza_sweet_raw), 
