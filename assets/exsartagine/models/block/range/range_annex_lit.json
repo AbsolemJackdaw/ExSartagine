@@ -2,7 +2,7 @@
     "textures": {
         "0": "exsartagine:blocks/stove_top",
         "1": "blocks/furnace_side",
-        "2": "blocks/coal_block",
+        "2": "blocks/lava_still",
         "3": "exsartagine:blocks/bars",
         "particle" : "blocks/cobblestone"
     },
