@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.mod.ExSartagine;
+import subaraki.exsartagine.tileentity.TileEntityPan;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 
@@ -104,20 +105,15 @@ public class BlockSmelter extends Block {
 					((TileEntitySmelter)world.getTileEntity(pos)).stopCooking();
 					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 				}
-				else if (down == ExSartagineBlock.range_extension){
-					if(world.getTileEntity(fromPos) instanceof TileEntityRangeExtension)
-					{
-						if(((TileEntityRangeExtension)world.getTileEntity(fromPos)).isCooking())
-						{
-							((TileEntitySmelter)world.getTileEntity(pos)).setCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-						else
-						{
-							((TileEntitySmelter)world.getTileEntity(pos)).stopCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-					}
+				else if (down == ExSartagineBlock.range_extension_lit)
+				{
+					((TileEntitySmelter)world.getTileEntity(pos)).setCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+				}
+				else if (down == ExSartagineBlock.range_extension)
+				{
+					((TileEntitySmelter)world.getTileEntity(pos)).stopCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 				}
 			}
 		}

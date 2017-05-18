@@ -80,7 +80,7 @@ public class BlockPan extends Block {
 		if(world.getTileEntity(pos) instanceof TileEntityPan){
 			if(fromPos.up().equals(pos)){ //if the block is beneath us
 				Block down = world.getBlockState(fromPos).getBlock();
-				
+
 				if(down == Blocks.AIR)
 				{
 					dropBlockAsItem(world, pos, getDefaultState(), 0);
@@ -98,20 +98,15 @@ public class BlockPan extends Block {
 					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
 					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 				}
-				else if (down == ExSartagineBlock.range_extension){
-					if(world.getTileEntity(fromPos) instanceof TileEntityRangeExtension)
-					{
-						if(((TileEntityRangeExtension)world.getTileEntity(fromPos)).isCooking())
-						{
-							((TileEntityPan)world.getTileEntity(pos)).setCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-						else
-						{
-							((TileEntityPan)world.getTileEntity(pos)).stopCooking();
-							world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-						}
-					}
+				else if (down == ExSartagineBlock.range_extension_lit)
+				{
+					((TileEntityPan)world.getTileEntity(pos)).setCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+				}
+				else if (down == ExSartagineBlock.range_extension)
+				{
+					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
+					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 				}
 			}
 		}
