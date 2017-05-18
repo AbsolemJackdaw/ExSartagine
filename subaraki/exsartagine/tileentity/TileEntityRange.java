@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import subaraki.exsartagine.block.BlockRangeExtension;
 import subaraki.exsartagine.block.ExSartagineBlock;
 
 public class TileEntityRange extends TileEntity implements ITickable {
@@ -50,7 +51,7 @@ public class TileEntityRange extends TileEntity implements ITickable {
 					{
 						maxFuelTimer = fuelTimer = TileEntityFurnace.getItemBurnTime(stack);
 						isCooking = true;
-						setRangeConnectionsCooking(isCooking);
+						setRangeConnectionsCooking(true);
 						//shrink after getting fuel timer, or when stack was 1, fueltimer cannot get timer from stack 0
 						inventory.getStackInSlot(i).shrink(1);
 						markDirty();
@@ -122,8 +123,9 @@ public class TileEntityRange extends TileEntity implements ITickable {
 			connections.setLong(Integer.toString(slot), pos.toLong());
 			slot++;
 		}
-		compound.setTag("connections", connections);
+		compound.setTag("connections", (NBTTagCompound)connections);
 
+		System.out.println("write "+connections);
 		return compound;
 	}
 
@@ -136,6 +138,7 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		maxFuelTimer = compound.getInteger("max");
 
 		NBTTagCompound connections = compound.getCompoundTag("connections");
+		System.out.println("read "+connections);
 		for (int i = 0; i < 4; i++)
 			if(connections.hasKey(String.valueOf(i)))
 			{
@@ -174,23 +177,52 @@ public class TileEntityRange extends TileEntity implements ITickable {
 	public void setRangeConnectionsCooking(boolean setCooking){
 		if(!connected.isEmpty())
 		{
+			//backup of connections. it seems to get whiped when updating the annex furnaces
+			List<BlockPos> backup = connected;
+			
 			for(BlockPos posTere : connected)
 			{
 				TileEntity te = world.getTileEntity(posTere);
 				if(te instanceof TileEntityRangeExtension){
 					TileEntityRangeExtension tere = ((TileEntityRangeExtension)te);
 					tere.setCooking(setCooking);
-					tere.markDirty();
+					//tere.markDirty();
 
 					IBlockState state = world.getBlockState(posTere);
 
-					//hacky, wrong way of updating correct blockstate, and notifying pots and pans
-					world.setBlockState(posTere, ExSartagineBlock.range_extension.getDefaultState());
-					world.setBlockState(posTere, state);
-					
-					world.notifyBlockUpdate(posTere, state, state, 3);
+					System.out.println(posTere + " " + setCooking);
+					if(setCooking)
+					{
+						IBlockState lit = ExSartagineBlock.range_extension_lit.getDefaultState().
+								withProperty(BlockRangeExtension.FACING, state.getValue(BlockRangeExtension.FACING)).
+								withProperty(BlockRangeExtension.ENDBLOCK, state.getValue(BlockRangeExtension.ENDBLOCK));
+
+						//connexions get whiped here for some reason :
+						//TODO fix this
+						world.setBlockState(posTere, lit);
+						world.notifyBlockUpdate(posTere, state, lit, 3);
+					}
+					else
+					{
+						IBlockState unlit = ExSartagineBlock.range_extension.getDefaultState().
+								withProperty(BlockRangeExtension.FACING, state.getValue(BlockRangeExtension.FACING)).
+								withProperty(BlockRangeExtension.ENDBLOCK, state.getValue(BlockRangeExtension.ENDBLOCK));
+
+						world.setBlockState(posTere, unlit);
+						world.notifyBlockUpdate(posTere, state, unlit, 3);
+					}
+					if(tere != null)
+					{
+						//revalidate te tileentity. furnace does the same after changing block state
+						tere.validate();
+						//make sure a copy gets back to the position
+						world.setTileEntity(posTere, tere);
+					}
 				}
 			}
+			
+			//set saved connections back to tile entity
+			connected = backup;
 		}
 	}
 
