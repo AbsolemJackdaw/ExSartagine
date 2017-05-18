@@ -37,16 +37,16 @@ public class BlockRangeExtension extends Block {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool ENDBLOCK = PropertyBool.create("endblock");
 
-	public BlockRangeExtension() {
+	public BlockRangeExtension(String name) {
 		super(Material.ROCK);
 
 		setLightLevel(0.0f);
 		setHardness(8f);
 		setSoundType(SoundType.STONE);
 		setCreativeTab(CreativeTabs.TOOLS);
-		setHarvestLevel("pickaxe", 1);
-		setUnlocalizedName(ExSartagine.MODID+".range_extended");
-		setRegistryName("range_extended");
+		setHarvestLevel("pickaxe", 0);
+		setUnlocalizedName(ExSartagine.MODID+"."+name);
+		setRegistryName(name);
 		setHardness(3.5f);
 		this.setLightOpacity(0);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.SOUTH).withProperty(ENDBLOCK, false));
