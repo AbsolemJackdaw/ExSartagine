@@ -122,7 +122,7 @@ public class ExSartagineItems {
 		OreDictionary.registerOre("cropVegetable", boiled_potato);
 		OreDictionary.registerOre("cropVegetable", boiled_beans);
 		
-		OreDictionary.registerOre("dustFlour", flour);
+		OreDictionary.registerOre("foodFlour", flour);
 		OreDictionary.registerOre("dustSalt", salt);
 		OreDictionary.registerOre("itemCheese", curd);
 		OreDictionary.registerOre("ingredientCheese", curd);
