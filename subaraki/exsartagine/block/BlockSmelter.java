@@ -11,7 +11,6 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -29,7 +28,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.mod.ExSartagine;
-import subaraki.exsartagine.tileentity.TileEntityPan;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 

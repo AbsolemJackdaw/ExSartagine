@@ -6,7 +6,6 @@ import static lib.item.ItemRegistry.registerRender;
 import com.mojang.realmsclient.gui.ChatFormatting;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer.EnumChatVisibility;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
