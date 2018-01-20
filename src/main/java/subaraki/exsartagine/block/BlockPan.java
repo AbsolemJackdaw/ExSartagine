@@ -24,10 +24,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import subaraki.exsartagine.ExSartagine;
 import subaraki.exsartagine.item.ExSartagineItems;
-import subaraki.exsartagine.mod.ExSartagine;
 import subaraki.exsartagine.tileentity.TileEntityPan;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
+import subaraki.exsartagine.util.Reference;
 
 public class BlockPan extends Block {
 
@@ -41,7 +42,7 @@ public class BlockPan extends Block {
 		setSoundType(SoundType.METAL);
 		setCreativeTab(ExSartagineItems.pots);
 		setHarvestLevel("pickaxe", 1);
-		setUnlocalizedName(ExSartagine.MODID+".pan");
+		setUnlocalizedName(Reference.MODID+".pan");
 		setRegistryName("pan");
 		setHardness(3.5f);
 		this.setLightOpacity(0);

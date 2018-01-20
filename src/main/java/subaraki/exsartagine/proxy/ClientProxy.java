@@ -2,17 +2,14 @@ package subaraki.exsartagine.proxy;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import subaraki.exsartagine.item.ExSartagineItems;
-import subaraki.exsartagine.tileentity.TileEntityPan;
-import subaraki.exsartagine.tileentity.TileEntityPot;
-import subaraki.exsartagine.tileentity.TileEntityRange;
-import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
-import subaraki.exsartagine.tileentity.TileEntitySmelter;
+import subaraki.exsartagine.tileentity.*;
 
 public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void registerRenders() {
 		ExSartagineItems.registerRenders();
+
 	}
 
 	@Override

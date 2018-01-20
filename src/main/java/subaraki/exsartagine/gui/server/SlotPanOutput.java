@@ -1,10 +1,10 @@
 package subaraki.exsartagine.gui.server;
 
+import net.minecraft.advancements.AdvancementList;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -101,14 +101,5 @@ public class SlotPanOutput extends SlotItemHandler
 
         net.minecraftforge.fml.common.FMLCommonHandler.instance().firePlayerSmeltedEvent(player, stack);
 
-        if (stack.getItem() == Items.IRON_INGOT)
-        {
-            this.player.addStat(AchievementList.ACQUIRE_IRON);
-        }
-
-        if (stack.getItem() == Items.COOKED_FISH)
-        {
-            this.player.addStat(AchievementList.COOK_FISH);
-        }
     }
 }

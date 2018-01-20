@@ -12,7 +12,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import subaraki.exsartagine.block.ExSartagineBlock;
-import subaraki.exsartagine.mod.ExSartagine;
+import subaraki.exsartagine.util.Reference;
 
 public class ExSartagineItems {
 
@@ -72,13 +72,13 @@ public class ExSartagineItems {
 		pot = new ItemBlock(ExSartagineBlock.pot).setRegistryName(ExSartagineBlock.pot.getRegistryName());
 		range = new ItemBlock(ExSartagineBlock.range).setRegistryName(ExSartagineBlock.range.getRegistryName());
 
-		boiled_egg = (ItemFood) new ItemFood(4, 0.5f, false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".egg.boiled").setRegistryName("egg.boiled");
-		boiled_beans = (ItemFood) new ItemFood(3, 0.2f,false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".beans.boiled").setRegistryName("beans.boiled");
-		boiled_potato = (ItemFood) new ItemFood(6, 0.5f,false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".potato.boiled").setRegistryName("potato.boiled");
+		boiled_egg = (ItemFood) new ItemFood(4, 0.5f, false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".egg.boiled").setRegistryName("egg.boiled");
+		boiled_beans = (ItemFood) new ItemFood(3, 0.2f,false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".beans.boiled").setRegistryName("beans.boiled");
+		boiled_potato = (ItemFood) new ItemFood(6, 0.5f,false).setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".potato.boiled").setRegistryName("potato.boiled");
 
-		flour = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".flour").setRegistryName("flour");
-		salt = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".salt").setRegistryName("salt");
-		yeast = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".yeast").setRegistryName("yeast");
+		flour = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".flour").setRegistryName("flour");
+		salt = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".salt").setRegistryName("salt");
+		yeast = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".yeast").setRegistryName("yeast");
 		curd = new Item(){
 			public void addInformation(net.minecraft.item.ItemStack stack, net.minecraft.entity.player.EntityPlayer playerIn, java.util.List<String> tooltip, boolean advanced) {
 				String text = ChatFormatting.ITALIC + "Simple Cheese";
@@ -86,29 +86,29 @@ public class ExSartagineItems {
 				if(!tooltip.contains(text))
 					tooltip.add(text);
 			};
-		}.setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".curd").setRegistryName("curd").setCreativeTab(foods);
-		dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".dough").setRegistryName("dough").setCreativeTab(foods);
-		bread_dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".doughBread").setRegistryName("doughBread").setCreativeTab(foods);
-		pizza_dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(ExSartagine.MODID+".doughPizza").setRegistryName("doughPizza").setCreativeTab(foods);
+		}.setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".curd").setRegistryName("curd").setCreativeTab(foods);
+		dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".dough").setRegistryName("dough").setCreativeTab(foods);
+		bread_dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".doughBread").setRegistryName("doughBread").setCreativeTab(foods);
+		pizza_dough = new Item().setCreativeTab(CreativeTabs.FOOD).setUnlocalizedName(Reference.MODID+".doughPizza").setRegistryName("doughPizza").setCreativeTab(foods);
 				
-		pizza_plain = (ItemFood)new ItemFood(6, 0.6f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaPlain").setRegistryName("pizzaPlain").setCreativeTab(foods);
+		pizza_plain = (ItemFood)new ItemFood(6, 0.6f, false).setUnlocalizedName(Reference.MODID+".pizzaPlain").setRegistryName("pizzaPlain").setCreativeTab(foods);
 		
-		pizza_meat = (ItemFood)new ItemFood(12, 0.9f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaMeat").setRegistryName("pizzaMeat").setCreativeTab(foods);
-		pizza_chicken = (ItemFood)new ItemFood(10, 0.9f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaChicken").setRegistryName("pizzaChicken").setCreativeTab(foods);
-		pizza_sweet = (ItemFood)new ItemFood(10, 0.7f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaSweet").setRegistryName("pizzaSweet").setCreativeTab(foods);
-		pizza_fish = (ItemFood)new ItemFood(9, 1.0f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaFish").setRegistryName("pizzaFish").setCreativeTab(foods);
+		pizza_meat = (ItemFood)new ItemFood(12, 0.9f, false).setUnlocalizedName(Reference.MODID+".pizzaMeat").setRegistryName("pizzaMeat").setCreativeTab(foods);
+		pizza_chicken = (ItemFood)new ItemFood(10, 0.9f, false).setUnlocalizedName(Reference.MODID+".pizzaChicken").setRegistryName("pizzaChicken").setCreativeTab(foods);
+		pizza_sweet = (ItemFood)new ItemFood(10, 0.7f, false).setUnlocalizedName(Reference.MODID+".pizzaSweet").setRegistryName("pizzaSweet").setCreativeTab(foods);
+		pizza_fish = (ItemFood)new ItemFood(9, 1.0f, false).setUnlocalizedName(Reference.MODID+".pizzaFish").setRegistryName("pizzaFish").setCreativeTab(foods);
 
-		pizza_meat_raw = (ItemFood)new ItemFood(4, 0.3f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaMeatRaw").setRegistryName("pizzaMeatRaw").setCreativeTab(foods);
-		pizza_chicken_raw = (ItemFood)new ItemFood(3, 0.3f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaChickenRaw").setRegistryName("pizzaChickenRaw").setCreativeTab(foods);
-		pizza_sweet_raw = (ItemFood)new ItemFood(3, 0.2f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaSweetRaw").setRegistryName("pizzaSweetRaw").setCreativeTab(foods);
-		pizza_fish_raw = (ItemFood)new ItemFood(2, 0.4f, false).setUnlocalizedName(ExSartagine.MODID+".pizzaFishRaw").setRegistryName("pizzaFishRaw").setCreativeTab(foods);
+		pizza_meat_raw = (ItemFood)new ItemFood(4, 0.3f, false).setUnlocalizedName(Reference.MODID+".pizzaMeatRaw").setRegistryName("pizzaMeatRaw").setCreativeTab(foods);
+		pizza_chicken_raw = (ItemFood)new ItemFood(3, 0.3f, false).setUnlocalizedName(Reference.MODID+".pizzaChickenRaw").setRegistryName("pizzaChickenRaw").setCreativeTab(foods);
+		pizza_sweet_raw = (ItemFood)new ItemFood(3, 0.2f, false).setUnlocalizedName(Reference.MODID+".pizzaSweetRaw").setRegistryName("pizzaSweetRaw").setCreativeTab(foods);
+		pizza_fish_raw = (ItemFood)new ItemFood(2, 0.4f, false).setUnlocalizedName(Reference.MODID+".pizzaFishRaw").setRegistryName("pizzaFishRaw").setCreativeTab(foods);
 
-		bread_fine = (ItemFood)new ItemFood(5, 0.8f, false).setUnlocalizedName(ExSartagine.MODID+".breadFine").setRegistryName("breadFine").setCreativeTab(foods);
-		bread_meat = (ItemFood)new ItemFood(4, 0.45f, false).setUnlocalizedName(ExSartagine.MODID+".breadMeat").setRegistryName("breadMeat").setCreativeTab(foods);
-		bread_veggie = (ItemFood)new ItemFood(8, 0.9f, false).setUnlocalizedName(ExSartagine.MODID+".breadVeggie").setRegistryName("breadVeggie").setCreativeTab(foods);
+		bread_fine = (ItemFood)new ItemFood(5, 0.8f, false).setUnlocalizedName(Reference.MODID+".breadFine").setRegistryName("breadFine").setCreativeTab(foods);
+		bread_meat = (ItemFood)new ItemFood(4, 0.45f, false).setUnlocalizedName(Reference.MODID+".breadMeat").setRegistryName("breadMeat").setCreativeTab(foods);
+		bread_veggie = (ItemFood)new ItemFood(8, 0.9f, false).setUnlocalizedName(Reference.MODID+".breadVeggie").setRegistryName("breadVeggie").setCreativeTab(foods);
 
-		bread_meat_raw = (ItemFood)new ItemFood(2, 0.3f, false).setUnlocalizedName(ExSartagine.MODID+".breadMeatRaw").setRegistryName("breadMeatRaw").setCreativeTab(foods);
-		bread_veggie_raw = (ItemFood)new ItemFood(3, 0.3f, false).setUnlocalizedName(ExSartagine.MODID+".breadVeggieRaw").setRegistryName("breadVeggieRaw").setCreativeTab(foods);
+		bread_meat_raw = (ItemFood)new ItemFood(2, 0.3f, false).setUnlocalizedName(Reference.MODID+".breadMeatRaw").setRegistryName("breadMeatRaw").setCreativeTab(foods);
+		bread_veggie_raw = (ItemFood)new ItemFood(3, 0.3f, false).setUnlocalizedName(Reference.MODID+".breadVeggieRaw").setRegistryName("breadVeggieRaw").setCreativeTab(foods);
 		
 		register();
 		
@@ -169,40 +169,40 @@ public class ExSartagineItems {
 	}
 
 	public static void registerRenders(){
-		registerRender(pan, "pan", ExSartagine.MODID);
-		registerRender(smelter, "smelter", ExSartagine.MODID);
-		registerRender(pot, "pot", ExSartagine.MODID);
-		registerRender(range, "range", ExSartagine.MODID);
+		registerRender(pan, "pan", Reference.MODID);
+		registerRender(smelter, "smelter", Reference.MODID);
+		registerRender(pot, "pot", Reference.MODID);
+		registerRender(range, "range", Reference.MODID);
 
-		registerRender(boiled_egg, "egg", ExSartagine.MODID);
-		registerRender(boiled_beans, "beans", ExSartagine.MODID);
-		registerRender(boiled_potato, "potato", ExSartagine.MODID);
+		registerRender(boiled_egg, "egg", Reference.MODID);
+		registerRender(boiled_beans, "beans", Reference.MODID);
+		registerRender(boiled_potato, "potato", Reference.MODID);
 		
-		registerRender(pizza_plain, "pizza_plain", ExSartagine.MODID);
+		registerRender(pizza_plain, "pizza_plain", Reference.MODID);
 
-		registerRender(pizza_chicken, "pizza_chicken_cooked", ExSartagine.MODID);
-		registerRender(pizza_sweet, "pizza_sweet_cooked", ExSartagine.MODID);
-		registerRender(pizza_meat, "pizza_meat_cooked", ExSartagine.MODID);
-		registerRender(pizza_fish, "pizza_fish_cooked", ExSartagine.MODID);
+		registerRender(pizza_chicken, "pizza_chicken_cooked", Reference.MODID);
+		registerRender(pizza_sweet, "pizza_sweet_cooked", Reference.MODID);
+		registerRender(pizza_meat, "pizza_meat_cooked", Reference.MODID);
+		registerRender(pizza_fish, "pizza_fish_cooked", Reference.MODID);
 
-		registerRender(pizza_chicken_raw, "pizza_chicken_raw", ExSartagine.MODID);
-		registerRender(pizza_sweet_raw, "pizza_sweet_raw", ExSartagine.MODID);
-		registerRender(pizza_meat_raw, "pizza_meat_raw", ExSartagine.MODID);
-		registerRender(pizza_fish_raw, "pizza_fish_raw", ExSartagine.MODID);
+		registerRender(pizza_chicken_raw, "pizza_chicken_raw", Reference.MODID);
+		registerRender(pizza_sweet_raw, "pizza_sweet_raw", Reference.MODID);
+		registerRender(pizza_meat_raw, "pizza_meat_raw", Reference.MODID);
+		registerRender(pizza_fish_raw, "pizza_fish_raw", Reference.MODID);
 		
-		registerRender(bread_fine, "fine_bread", ExSartagine.MODID);
-		registerRender(bread_meat, "meat_minibread", ExSartagine.MODID);
-		registerRender(bread_veggie, "veggie_bread", ExSartagine.MODID);
+		registerRender(bread_fine, "fine_bread", Reference.MODID);
+		registerRender(bread_meat, "meat_minibread", Reference.MODID);
+		registerRender(bread_veggie, "veggie_bread", Reference.MODID);
 		
-		registerRender(bread_meat_raw, "meat_minibread_raw", ExSartagine.MODID);
-		registerRender(bread_veggie_raw, "veggie_bread_raw", ExSartagine.MODID);
+		registerRender(bread_meat_raw, "meat_minibread_raw", Reference.MODID);
+		registerRender(bread_veggie_raw, "veggie_bread_raw", Reference.MODID);
 		
-		registerRender(pizza_dough, "dough", ExSartagine.MODID);
-		registerRender(bread_dough, "dough", ExSartagine.MODID);
-		registerRender(dough, "dough", ExSartagine.MODID);
-		registerRender(salt, "salt", ExSartagine.MODID);
-		registerRender(flour, "flour", ExSartagine.MODID);
-		registerRender(yeast, "yeast", ExSartagine.MODID);
-		registerRender(curd, "curd", ExSartagine.MODID);
+		registerRender(pizza_dough, "dough", Reference.MODID);
+		registerRender(bread_dough, "dough", Reference.MODID);
+		registerRender(dough, "dough", Reference.MODID);
+		registerRender(salt, "salt", Reference.MODID);
+		registerRender(flour, "flour", Reference.MODID);
+		registerRender(yeast, "yeast", Reference.MODID);
+		registerRender(curd, "curd", Reference.MODID);
 	}
 }

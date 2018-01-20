@@ -36,7 +36,7 @@ public class SlotSmelterInput extends SlotItemHandler {
 			else
 			{
 				ItemStack result = FurnaceRecipes.instance().getSmeltingResult(getStack());
-				if (result.getItem().equals(Items.field_191525_da))
+				if (result.getItem().equals(Items.IRON_NUGGET))
 				{
 					return true;
 				}
