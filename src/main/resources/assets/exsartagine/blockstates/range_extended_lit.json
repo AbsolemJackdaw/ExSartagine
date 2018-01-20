@@ -1,0 +1,34 @@
+{
+    "forge_marker":1,
+    "defaults":{
+        "model":"exsartagine:range/range_annex_lit"
+    },
+    "variants":{
+        "facing":{
+            "east":{
+                "y":270
+            },
+            "west":{
+                "y":90
+            },
+            "south":{
+                "y":0
+            },
+            "north":{
+                "y":180
+            }
+        },
+        "endblock":{
+            "true":{
+                "textures":{
+                     "0": "exsartagine:blocks/top_right"
+                     }
+            },
+            "false":{
+             "textures":{
+                "0": "exsartagine:blocks/top_mid"
+                }
+            }
+        }
+    }
+}

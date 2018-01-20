@@ -1,0 +1,23 @@
+{
+    "variants":{
+        "normal":{
+            "model":"exsartagine:range/range"
+        },
+        "facing=east":{
+            "model":"exsartagine:range/range",
+            "y":270
+        },
+        "facing=west":{
+            "model":"exsartagine:range/range",
+            "y":90
+        },
+        "facing=south":{
+            "model":"exsartagine:range/range",
+            "y":0
+        },
+        "facing=north":{
+            "model":"exsartagine:range/range",
+            "y":180
+        }
+    }
+}
