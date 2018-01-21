@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+           "ore": "foodDoughBread",
+           "type": "forge:ore_dict"
+        },
+        {
+            "ore": "cropVegetable", 
+            "type": "forge:ore_dict"
+        },
+        {
+            "ore": "cropVegetable", 
+            "type": "forge:ore_dict"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:breadVeggie"
+    }
+}

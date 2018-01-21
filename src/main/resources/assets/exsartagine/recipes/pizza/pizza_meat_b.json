@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+           "item": "exsartagine:pizzaPlain",
+        },
+        {
+            "ore": "portionMeat", 
+            "type": "forge:ore_dict"
+        },
+        {
+            "ore": "portionMeat", 
+            "type": "forge:ore_dict"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:pizzaMeatRaw"
+    }
+}

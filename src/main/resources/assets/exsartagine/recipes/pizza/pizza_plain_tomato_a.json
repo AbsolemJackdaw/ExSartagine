@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+           "ore": "foodDoughFlat",
+           "type": "forge:ore_dict"
+        },
+        {
+            "ore": "cropTomato", 
+            "type": "forge:ore_dict"
+        },
+        {
+            "ore": "cropTomato", 
+            "type": "forge:ore_dict"
+        },
+        {
+            "ore": "itemCheese", 
+            "type": "forge:ore_dict"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:pizzaPlain"
+    }
+}

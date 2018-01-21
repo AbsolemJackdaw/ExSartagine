@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "subaraki",
+    
+    "key": {
+        "D": { 
+            "ore": "foodDoughBread",
+            "type": "forge:ore_dict
+        },
+        "A": {
+            "ore": "cropVegetable",
+            "type": "forge:ore_dict
+        },
+        "B": {
+            "ore": "cropVegetable",
+            "type": "forge:ore_dict
+        }
+    },
+    "result": {
+        "item": "exsartagine:breadMeat",
+        "count": 6
+    }
+}

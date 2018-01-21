@@ -3,15 +3,14 @@
     "group": "subaraki",
     "ingredients": [
         {
-	       "ore": "cropMushroom",
-	       "type": "forge:ore_dict"
+           "item": "exsartagine:pizzaPlain",
         },
         {
-            "ore": "cropFruit", 
+            "ore": "foodRedMeatRaw", 
             "type": "forge:ore_dict"
         }
     ],
     "result": {
-        "item": "exsartagine:yeast"
+        "item": "exsartagine:pizzaMeatRaw"
     }
 }

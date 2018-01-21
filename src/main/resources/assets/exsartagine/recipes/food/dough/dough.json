@@ -16,6 +16,7 @@
         }
     },
     "result": {
-        "item": "exsartagine:flour"
+        "item": "exsartagine:flour",
+        "count": 8
     }
 }

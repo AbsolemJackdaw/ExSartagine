@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+	       "ore": "foodDough",
+	       "type": "forge:ore_dict"
+        },
+        {
+            "ore": "itemYeast", 
+            "type": "forge:ore_dict"
+        },
+        {
+             "ore": "dustSalt", 
+            "type": "forge:ore_dict"
+        },
+        {
+             "ore": "dustSugar", 
+            "type": "forge:ore_dict"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:doughPizza"
+    }
+}
