@@ -2,8 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "group": "flour",
     "pattern": [
-        "F ",
-        "  "
+        "F"
     ],
     "key": {
         "F": { "item": "minecraft:wheat"}
