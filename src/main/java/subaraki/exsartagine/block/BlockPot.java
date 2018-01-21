@@ -32,7 +32,7 @@ import subaraki.exsartagine.tileentity.TileEntityPot;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.util.Reference;
 
-public class BlockPot extends Block {
+public class BlockPot extends BlockHeatable {
 
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.15D, 0.0D, 0.15D, 0.85D, 0.6D, 0.85D);
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -55,20 +55,6 @@ public class BlockPot extends Block {
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World world, BlockPos pos) {
-		Block blockDown = world.getBlockState(pos.down()).getBlock();
-		if(blockDown == Blocks.LIT_FURNACE ||blockDown == Blocks.FURNACE || blockDown == ExSartagineBlock.range_extension){
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return false;
-	}
-
-	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
@@ -83,75 +69,15 @@ public class BlockPot extends Block {
 			worldIn.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 			if(!playerIn.capabilities.isCreativeMode)
 				playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
+
+			onBlockAdded(worldIn, pos, state); //assure activation of any heating source
+
 			return true;
 		}
 
 		playerIn.openGui(ExSartagine.instance, 2, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;
-	}
-
-	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
-	{
-
-		if(world.getTileEntity(pos) instanceof TileEntityPot){
-			if(fromPos.up().equals(pos)){ //if the block is beneath us
-				Block down = world.getBlockState(fromPos).getBlock();
-				if(down == Blocks.AIR)
-				{
-					dropBlockAsItem(world, pos, getDefaultState(), 0);
-					world.setBlockToAir(pos);
-				}
-
-				else if(down == Blocks.LIT_FURNACE)
-				{
-					if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
-					{
-						((TileEntityPot)world.getTileEntity(pos)).setCooking();
-						world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-					}
-				}
-
-				else if(down == Blocks.FURNACE)
-				{
-					if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
-					{
-						((TileEntityPot)world.getTileEntity(pos)).stopCooking();
-						world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-					}
-				}
-				else if (down == ExSartagineBlock.range_extension_lit)
-				{
-					((TileEntityPot)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-				else if (down == ExSartagineBlock.range_extension)
-				{
-					((TileEntityPot)world.getTileEntity(pos)).stopCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		if(world.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPot)world.getTileEntity(pos)).setCooking();
-			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-		}
-		
-		if (world.getBlockState(pos.down()).getBlock() == ExSartagineBlock.range_extension){
-			if(world.getTileEntity(pos.down()) instanceof TileEntityRangeExtension)
-			{
-				if(((TileEntityRangeExtension)world.getTileEntity(pos.down())).isCooking())
-				{
-					((TileEntityPot)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -247,6 +173,7 @@ public class BlockPot extends Block {
 
 		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(FULL, (meta & 4) > 0);
 	}
+	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
@@ -256,5 +183,28 @@ public class BlockPot extends Block {
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	{
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+
+	@Override
+	protected void startHeating(World world, IBlockState state, BlockPos pos) {
+		if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
+		{
+			((TileEntityPot)world.getTileEntity(pos)).setCooking();
+			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+		}
+	}
+
+	@Override
+	protected void stopHeating(World world, IBlockState state, BlockPos pos) {
+		if(((TileEntityPot)world.getTileEntity(pos)).getWaterLevel() > 0)
+		{
+			((TileEntityPot)world.getTileEntity(pos)).stopCooking();
+			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+		}
+	}
+	
+	@Override
+	protected Class getTileEntity() {
+		return TileEntityPot.class;
 	}
 }

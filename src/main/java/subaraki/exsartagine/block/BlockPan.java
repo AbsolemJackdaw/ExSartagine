@@ -30,7 +30,7 @@ import subaraki.exsartagine.tileentity.TileEntityPan;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.util.Reference;
 
-public class BlockPan extends Block {
+public class BlockPan extends BlockHeatable {
 
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -48,21 +48,7 @@ public class BlockPan extends Block {
 		this.setLightOpacity(0);
 	}
 
-	@Override
-	public boolean canPlaceBlockAt(World world, BlockPos pos) {
-		Block blockDown = world.getBlockState(pos.down()).getBlock();
-		if(blockDown == Blocks.LIT_FURNACE ||blockDown == Blocks.FURNACE || blockDown == ExSartagineBlock.range_extension){
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return false;
-	}
-
-	@Override
+ 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
@@ -71,63 +57,6 @@ public class BlockPan extends Block {
 
 		playerIn.openGui(ExSartagine.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
-	}
-
-	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
-	{
-
-		if(world.getTileEntity(pos) instanceof TileEntityPan){
-			if(fromPos.up().equals(pos)){ //if the block is beneath us
-				Block down = world.getBlockState(fromPos).getBlock();
-
-				if(down == Blocks.AIR)
-				{
-					dropBlockAsItem(world, pos, getDefaultState(), 0);
-					world.setBlockToAir(pos);
-				}
-
-				else if(down == Blocks.LIT_FURNACE)
-				{
-					((TileEntityPan)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-
-				else if(down == Blocks.FURNACE)
-				{
-					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-				else if (down == ExSartagineBlock.range_extension_lit)
-				{
-					((TileEntityPan)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-				else if (down == ExSartagineBlock.range_extension)
-				{
-					((TileEntityPan)world.getTileEntity(pos)).stopCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		if(world.getBlockState(pos.down()).getBlock() == Blocks.LIT_FURNACE){
-			((TileEntityPan)world.getTileEntity(pos)).setCooking();
-			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-		}
-		if (world.getBlockState(pos.down()).getBlock() == ExSartagineBlock.range_extension){
-			if(world.getTileEntity(pos.down()) instanceof TileEntityRangeExtension)
-			{
-				if(((TileEntityRangeExtension)world.getTileEntity(pos.down())).isCooking())
-				{
-					((TileEntityPan)world.getTileEntity(pos)).setCooking();
-					world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -230,5 +159,22 @@ public class BlockPan extends Block {
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	{
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+
+	@Override
+	protected void startHeating(World world, IBlockState state, BlockPos pos) {
+		((TileEntityPan)world.getTileEntity(pos)).setCooking();
+		world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+	}
+
+	@Override
+	protected void stopHeating(World world, IBlockState state, BlockPos pos) {
+		((TileEntityPan)world.getTileEntity(pos)).stopCooking();
+		world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
+	}
+
+	@Override
+	protected Class getTileEntity() {
+		return TileEntityPan.class;
 	}
 }
