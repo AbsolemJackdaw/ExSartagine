@@ -42,7 +42,7 @@ public class TileEntityRenderFood extends TileEntitySpecialRenderer {
 		}
 		
 		TileEntityCooker te = null;
-		if (tileentity == null || te instanceof TileEntitySmelter)
+		if (tileentity == null || tileentity instanceof TileEntitySmelter)
 			return;
 
 		if (tileentity instanceof TileEntityCooker)
