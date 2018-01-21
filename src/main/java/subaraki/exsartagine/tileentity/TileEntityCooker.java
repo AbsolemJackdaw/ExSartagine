@@ -24,7 +24,7 @@ public class TileEntityCooker extends TileEntity implements ITickable {
 
 	protected ItemStackHandler inventory = new ItemStackHandler(2);
 
-	protected ItemStack getEntry(){
+	public ItemStack getEntry(){
 		return inventory.getStackInSlot(ENTRY);
 	}
 	protected ItemStack getEntryStackOne(){
@@ -32,7 +32,7 @@ public class TileEntityCooker extends TileEntity implements ITickable {
 		//stack.setCount(1);
 		return stack;
 	}
-	protected ItemStack getResult(){
+	public ItemStack getResult(){
 		return inventory.getStackInSlot(RESULT);
 	}
 	

@@ -51,18 +51,17 @@ public abstract class BlockHeatable extends Block {
 				{
 					startHeating(world, state, pos);
 				}
-
 				else if(down == Blocks.FURNACE)
 				{
-					stopHeating(world, state, fromPos);
+					stopHeating(world, state, pos);
 				}
 				else if (down == ExSartagineBlock.range_extension_lit)
 				{
-					startHeating(world, state, fromPos);
+					startHeating(world, state, pos);
 				}
 				else if (down == ExSartagineBlock.range_extension)
 				{
-					stopHeating(world, state, fromPos);
+					stopHeating(world, state, pos);
 				}
 			}
 		}
