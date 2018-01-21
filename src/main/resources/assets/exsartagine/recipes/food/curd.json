@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+	       "ore": "itemYeast",
+	       "type": "forge:ore_dict"
+        },
+        {
+            "ore": "dustSalt", 
+            "type": "forge:ore_dict"
+        },
+        {
+            "item": "minecraft:milk_bucket"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:curd"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "subaraki",
+    "pattern": [
+        "FFF",
+        "FBF",
+        "FFF"
+    ],
+    "key": {
+        "F": { 
+            "ore": "dustFlour",
+            "type": "forge:ore_dict
+        },
+        "B": {
+            "item":"minecraft:water_bucket"
+        }
+    },
+    "result": {
+        "item": "exsartagine:flour"
+    }
+}

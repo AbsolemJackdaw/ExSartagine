@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:shapeless",
+    "group": "subaraki",
+    "ingredients": [
+        {
+	       "ore": "cropMushroom",
+	       "type": "forge:ore_dict"
+        },
+        {
+            "ore": "cropFruit", 
+            "type": "forge:ore_dict"
+        }
+    ],
+    "result": {
+        "item": "exsartagine:yeast"
+    }
+}
