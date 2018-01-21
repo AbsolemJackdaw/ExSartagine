@@ -5,15 +5,15 @@
     "key": {
         "D": { 
             "ore": "foodDoughBread",
-            "type": "forge:ore_dict
+            "type": "forge:ore_dict"
         },
         "A": {
             "ore": "cropVegetable",
-            "type": "forge:ore_dict
+            "type": "forge:ore_dict"
         },
         "B": {
             "ore": "cropVegetable",
-            "type": "forge:ore_dict
+            "type": "forge:ore_dict"
         }
     },
     "result": {
