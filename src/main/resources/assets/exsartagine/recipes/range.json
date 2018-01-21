@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "subaraki",
+    "pattern": [
+        "I I",
+        "IMI",
+        "BBB"
+    ],
+    "key": {
+        "I": { "item": "minecraft:iron_ingot"},
+        "B": { "item": "minecraft:iron_block"},
+		"M": { "item": "minecraft:magma"}
+    },
+    "result": {
+        "item": "exsartagine:range"
+    }
+}

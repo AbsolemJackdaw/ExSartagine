@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "subaraki",
+    "pattern": [
+        "I I",
+        "IB ",
+        "III"
+    ],
+    "key": {
+        "I": { "item": "minecraft:iron_ingot"},
+        "B": { "item": "minecraft:bucket"}
+    },
+    "result": {
+        "item": "exsartagine:smelter"
+    }
+}
