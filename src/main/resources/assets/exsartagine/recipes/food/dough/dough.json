@@ -1,6 +1,6 @@
 {
     "type": "minecraft:crafting_shaped",
-    "group": "subaraki",
+    "group": "dough",
     "pattern": [
         "FFF",
         "FBF",
@@ -9,7 +9,7 @@
     "key": {
         "F": { 
             "ore": "dustFlour",
-            "type": "forge:ore_dict
+            "type": "forge:ore_dict"
         },
         "B": {
             "item":"minecraft:water_bucket"

@@ -1,6 +1,6 @@
 {
-    "type": "minecraft:shapeless",
-    "group": "subaraki",
+    "type": "minecraft:craftig_shapeless",
+    "group": "doughbread",
     "ingredients": [
         {
 	       "ore": "foodDough",
@@ -11,7 +11,7 @@
             "type": "forge:ore_dict"
         },
         {
-             "ore": "dustSalt", 
+            "ore": "dustSalt", 
             "type": "forge:ore_dict"
         }
     ],

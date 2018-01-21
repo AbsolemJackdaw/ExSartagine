@@ -1,6 +1,6 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "group": "subaraki",
+    "group": "exsartagine:bread",
     
     "key": {
         "D": { 

@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "group": "subaraki",
+    "group": "pizzachicken",
     "ingredients": [
         {
-           "item": "exsartagine:pizzaPlain",
+           "item": "exsartagine:pizzaPlain"
         },
         {
             "item": "minecraft:chicken" 

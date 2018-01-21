@@ -1,6 +1,6 @@
 {
-    "type": "minecraft:shapeless",
-    "group": "subaraki",
+    "type": "minecraft:crafting_shapeless",
+    "group": "cheese",
     "ingredients": [
         {
 	       "ore": "itemYeast",

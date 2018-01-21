@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "group": "subaraki",
+    "group": "pizzafish",
     "ingredients": [
         {
-           "item": "exsartagine:pizzaPlain",
+           "item": "exsartagine:pizzaPlain"
         },
         {
             "ore": "foodFishRaw",
