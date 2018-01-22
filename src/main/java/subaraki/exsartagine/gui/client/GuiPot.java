@@ -62,4 +62,10 @@ public class GuiPot extends GuiContainer {
 		float waterProgress = (float)pot.getWaterLevel() / 3.5f;
 		this.drawTexturedModalRect(i+14, j+15+(54 - (int)waterProgress), 176, 62 + (54 - (int)waterProgress), 5, 54);
 	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
 }

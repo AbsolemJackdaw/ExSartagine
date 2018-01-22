@@ -73,22 +73,41 @@ public class BlockRange extends Block {
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
 	{
 		EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-		BlockPos nextTo = pos.offset(enumfacing.rotateYCCW());
+		BlockPos posOfRangeExtention = pos.offset(enumfacing.rotateYCCW());
 
-		if(world.getBlockState(nextTo).getBlock() == Blocks.FURNACE){
-			world.setBlockToAir(nextTo);
-			world.setBlockState(nextTo, ExSartagineBlock.range_extension.getDefaultState().withProperty(BlockRangeExtension.FACING, enumfacing));
+		if(world.getBlockState(posOfRangeExtention).getBlock() == Blocks.FURNACE){
 
-			if(world.getTileEntity(nextTo) instanceof TileEntityRangeExtension)
+			if(world.getTileEntity(pos) instanceof TileEntityRange)
 			{
-				TileEntityRangeExtension tere = (TileEntityRangeExtension)world.getTileEntity(nextTo);
-				tere.setParentRange(pos);
+				TileEntityRange range = (TileEntityRange)world.getTileEntity(pos);
 
-				if(world.getTileEntity(pos) instanceof TileEntityRange)
+				world.setBlockToAir(posOfRangeExtention); //set furnace to air
+
+				boolean isLit = range.isFueled(); 
+
+				IBlockState newState = null; //determine wether or not the new furnace needs to be lit
+
+				if(isLit)
+					newState = ExSartagineBlock.range_extension_lit.getDefaultState().
+					withProperty(BlockRangeExtension.FACING, state.getValue(BlockRangeExtension.FACING)).
+					withProperty(BlockRangeExtension.ENDBLOCK, true);
+
+				else
+					newState = ExSartagineBlock.range_extension.getDefaultState().
+					withProperty(BlockRangeExtension.FACING, state.getValue(BlockRangeExtension.FACING)).
+					withProperty(BlockRangeExtension.ENDBLOCK, true);
+
+				world.setBlockState(posOfRangeExtention, newState, 3);
+
+				if(world.getTileEntity(posOfRangeExtention) instanceof TileEntityRangeExtension)
 				{
-					TileEntityRange range = (TileEntityRange)world.getTileEntity(pos);
+					TileEntityRangeExtension extensionRange = (TileEntityRangeExtension)world.getTileEntity(posOfRangeExtention);
 					if(range.canConnect())
-						range.connect(tere);
+					{
+						extensionRange.setParentRange(pos);
+						range.connect(extensionRange);
+						extensionRange.setCooking(isLit);
+					}
 				}
 			}
 		}

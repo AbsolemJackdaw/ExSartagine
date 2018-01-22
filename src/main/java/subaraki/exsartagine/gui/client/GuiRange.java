@@ -57,4 +57,10 @@ public class GuiRange extends GuiContainer {
 			this.drawTexturedModalRect(i+114, j+39+28 - (int) convert , 176, 28-(int)convert, 28, (int)convert);
 		}
 	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
 }

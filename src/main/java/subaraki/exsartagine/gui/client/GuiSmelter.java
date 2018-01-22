@@ -59,4 +59,10 @@ public class GuiSmelter extends GuiContainer {
 		float progress = smelter.getCookingProgress() / 5.52f; //progress max = 200. 200 / 36 = 5.5. 5.5*200 = 36; 36 is texture max
 		this.drawTexturedModalRect(i+73, j+17, 176, 44, (int)progress, 15); //Arrow
 	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
 }

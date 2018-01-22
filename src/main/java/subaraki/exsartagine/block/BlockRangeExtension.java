@@ -85,32 +85,50 @@ public class BlockRangeExtension extends Block {
 
 		else if(world.getTileEntity(pos) instanceof TileEntityRangeExtension)
 		{
-			TileEntityRangeExtension tere = (TileEntityRangeExtension)world.getTileEntity(pos);
+			TileEntityRangeExtension currentRange = (TileEntityRangeExtension)world.getTileEntity(pos);
 
 			//placed (should exclude being broken from the left and having a furnace right, because the code for popping the block is above)
 			if(world.getBlockState(nextTo).getBlock() == Blocks.FURNACE )
 			{
-				if(tere.getParentRange() != null && world.getTileEntity(tere.getParentRange()) instanceof TileEntityRange)
+				if(currentRange.getParentRange() != null && world.getTileEntity(currentRange.getParentRange()) instanceof TileEntityRange)
 				{
-					TileEntityRange range = (TileEntityRange)world.getTileEntity(tere.getParentRange());
-					if(range.canConnect())
+					TileEntityRange parentRange = (TileEntityRange)world.getTileEntity(currentRange.getParentRange());
+					if(parentRange.canConnect())
 					{
 						world.setBlockToAir(nextTo);
-						world.setBlockState(nextTo, ExSartagineBlock.range_extension.getDefaultState().withProperty(FACING, enumfacing).withProperty(ENDBLOCK, true));
 						world.setBlockState(pos, world.getBlockState(pos).withProperty(ENDBLOCK, false),3);
-						TileEntity te = world.getTileEntity(nextTo);
-						if(te instanceof TileEntityRangeExtension)
+
+						boolean isLit = parentRange.isFueled();
+
+						IBlockState newState = null;
+
+						if(isLit)
+							newState = ExSartagineBlock.range_extension_lit.getDefaultState().
+							withProperty(FACING, state.getValue(BlockRangeExtension.FACING)).
+							withProperty(ENDBLOCK, true);
+
+						else
+							newState = ExSartagineBlock.range_extension.getDefaultState().
+							withProperty(FACING, state.getValue(BlockRangeExtension.FACING)).
+							withProperty(ENDBLOCK, true);
+
+						world.setBlockState(nextTo, newState, 3);
+
+						TileEntity newRange = world.getTileEntity(nextTo);
+						
+						if(newRange instanceof TileEntityRangeExtension)
 						{
-							((TileEntityRangeExtension)te).setParentRange(tere.getParentRange());
-							((TileEntityRangeExtension)te).setCooking(tere.isCooking());
-							range.connect(((TileEntityRangeExtension)te));
+							TileEntityRangeExtension extension = ((TileEntityRangeExtension)newRange);
+							extension.setParentRange(parentRange.getPos());
+							extension.setCooking(isLit);
+							parentRange.connect(extension);
 						}
 					}
 				}
-			}
-			//another extension is removed next to it
-			else if(world.getBlockState(nextTo).getBlock() == Blocks.AIR ){
-				world.setBlockState(pos, world.getBlockState(pos).withProperty(ENDBLOCK, true),3);
+				//another extension is removed next to it
+				else if(world.getBlockState(nextTo).getBlock() == Blocks.AIR ){
+					world.setBlockState(pos, world.getBlockState(pos).withProperty(ENDBLOCK, true),3);
+				}
 			}
 		}
 	}
