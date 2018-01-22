@@ -39,6 +39,7 @@ public class TileEntityRenderFood extends TileEntitySpecialRenderer {
 			ei = new EntityItem(getWorld(), 0, 0, 0);
 			ei.setInfinitePickupDelay();
 			ei.setNoDespawn();
+			ei.hoverStart = 0F;
 		}
 		
 		TileEntityCooker te = null;
@@ -57,20 +58,24 @@ public class TileEntityRenderFood extends TileEntitySpecialRenderer {
 		ItemStack resultToRender  = te.getResult();
 
 		GlStateManager.pushMatrix();
+		GlStateManager.translate((float) x, (float) y, (float) z);
+		GlStateManager.translate(0.1, -0.65, 0);
+		GlStateManager.translate(0.5, 0.75, 0.5);
+		GlStateManager.rotate(90, 0, 0, 1);
+		GlStateManager.translate(-0.5, -0.75, -0.5);
 
-		GlStateManager.translate((float) x - 0F, (float) y - 0.6F, (float) z - 0F);
 
 		if(!entryToRender.isEmpty())
 		{
-			if(ei.getItem() != entryToRender)
-				ei.setItem(entryToRender);
+			entryToRender.setCount(1);
+			ei.setItem(entryToRender);
 			Minecraft.getMinecraft().getRenderManager().renderEntity(ei, 0.5, 0.4, 0.5, 0F, 0, false);
 		}
 		else if (!resultToRender.isEmpty())
 		{
 			if(ei.getItem() != resultToRender)
+				resultToRender.setCount(1);
 				ei.setItem(resultToRender);
-
 			Minecraft.getMinecraft().getRenderManager().renderEntity(ei, 0.5, 0.4, 0.5, 0F, 0, false);	
 		}
 

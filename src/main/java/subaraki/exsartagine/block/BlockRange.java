@@ -38,7 +38,7 @@ public class BlockRange extends Block {
 	public BlockRange() {
 		super(Material.IRON);
 
-		setLightLevel(0.0f);
+		setLightLevel(1.0f);
 		setSoundType(SoundType.METAL);
 		setCreativeTab(ExSartagineItems.pots);
 		setHarvestLevel("pickaxe", 1);
