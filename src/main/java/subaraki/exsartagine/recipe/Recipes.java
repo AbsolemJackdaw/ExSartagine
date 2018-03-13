@@ -28,5 +28,13 @@ public class Recipes {
 		PotRecipes.getInstance().addRecipe(new ItemStack(Items.POTATO,1), new ItemStack(ExSartagineItems.boiled_potato,1));
 
 		PotRecipes.getInstance().addRecipe(new ItemStack(Blocks.STONE,1), new ItemStack(ExSartagineItems.salt,1));
+		
+		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.spaghetti_base), new ItemStack(ExSartagineItems.spaghetti));
+		
+		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_chicken), new ItemStack(ExSartagineItems.noodles_chicken_cooked));
+		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_fish), new ItemStack(ExSartagineItems.noodles_fish_cooked));
+		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_meat), new ItemStack(ExSartagineItems.noodles_meat_cooked));
+		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_veggie), new ItemStack(ExSartagineItems.noodles_veggie_cooked));
+
 	}
 }
