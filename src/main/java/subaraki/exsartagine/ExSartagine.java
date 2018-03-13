@@ -1,5 +1,9 @@
 package subaraki.exsartagine;
 
+import static subaraki.exsartagine.util.Reference.*;
+
+import java.util.Arrays;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -12,19 +16,14 @@ import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
 import subaraki.exsartagine.recipe.Recipes;
-import subaraki.exsartagine.util.Reference;
 
-import java.util.Arrays;
-
-import static subaraki.exsartagine.util.Reference.MODID;
-
-@Mod(name = Reference.NAME, modid = MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCY)
+@Mod(name = NAME, modid = MODID, version = VERSION, dependencies = DEPENDENCY)
 public class ExSartagine {
 
-    @SidedProxy(serverSide = Reference.SERVER_PROXY , clientSide =Reference.CLIENT_PROXY)
+    @SidedProxy(serverSide = SERVER_PROXY , clientSide = CLIENT_PROXY)
     public static ServerProxy proxy;
 
-    @Instance(Reference.MODID)
+    @Instance(MODID)
     public static ExSartagine instance;
 
     @EventHandler
