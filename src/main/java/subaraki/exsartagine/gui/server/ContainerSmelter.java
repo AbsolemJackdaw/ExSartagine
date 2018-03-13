@@ -18,9 +18,10 @@ public class ContainerSmelter extends Container{
 
 	public ContainerSmelter(InventoryPlayer playerInventory, TileEntitySmelter smelter) {
 
-		for(String ore : OreDictionary.getOreNames())
-			if(ore.toLowerCase().contains("ore"))
-				ores.addAll(OreDictionary.getOres(ore));
+			for(String ore : OreDictionary.getOreNames())
+				if(!ore.isEmpty() && ore != null)
+					if(ore.toLowerCase().contains("ore"))
+						ores.addAll(OreDictionary.getOres(ore));
 
 		this.addSlotToContainer(new SlotSmelterInput(ores, smelter.getInventory(), 0, 56, 17));
 		this.addSlotToContainer(new SlotPanOutput(playerInventory.player, smelter.getInventory(), 1, 116, 35));
