@@ -28,3 +28,6 @@ run
 /saves/
 *.json
 *.log
+/generated/
+/scripts/
+/crash-reports/
