@@ -1,12 +1,10 @@
 package subaraki.exsartagine.gui.server;
 
-import net.minecraft.advancements.AdvancementList;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class SlotPanOutput extends SlotItemHandler
@@ -15,7 +13,7 @@ public class SlotPanOutput extends SlotItemHandler
     private final EntityPlayer player;
     private int removeCount;
 
-    public SlotPanOutput(EntityPlayer player, ItemStackHandler inventoryIn, int slotIndex, int xPosition, int yPosition)
+    public SlotPanOutput(EntityPlayer player, IItemHandler inventoryIn, int slotIndex, int xPosition, int yPosition)
     {
         super(inventoryIn, slotIndex, xPosition, yPosition);
         this.player = player;

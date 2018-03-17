@@ -24,9 +24,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.ExSartagine;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.tileentity.TileEntityPan;
+import subaraki.exsartagine.tileentity.TileEntityPot;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.util.Reference;
 
@@ -48,7 +50,7 @@ public class BlockPan extends BlockHeatable {
 		this.setLightOpacity(0);
 	}
 
- 	@Override
+	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
@@ -66,9 +68,8 @@ public class BlockPan extends BlockHeatable {
 
 		if (tileentity instanceof TileEntityPan)
 		{
-			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntityPan)tileentity).getInventory());
+			
 		}
-
 		super.breakBlock(worldIn, pos, state);
 	}
 

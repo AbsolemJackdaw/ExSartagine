@@ -36,5 +36,9 @@ public class Recipes {
 		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_meat), new ItemStack(ExSartagineItems.noodles_meat_cooked));
 		PotRecipes.getInstance().addRecipe(new ItemStack(ExSartagineItems.noodles_veggie), new ItemStack(ExSartagineItems.noodles_veggie_cooked));
 
+		SmelterEntries.getInstance().addEntry(new ItemStack(Blocks.IRON_ORE));
+		SmelterEntries.getInstance().addEntry(new ItemStack(Blocks.GOLD_ORE));
+		SmelterEntries.getInstance().addEntry(new ItemStack(Items.CLAY_BALL));
+		SmelterEntries.getInstance().addEntry(new ItemStack(Blocks.NETHERRACK));
 	}
 }

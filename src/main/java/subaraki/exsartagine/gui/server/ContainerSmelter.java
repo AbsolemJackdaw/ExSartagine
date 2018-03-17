@@ -10,20 +10,15 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import subaraki.exsartagine.recipe.SmelterEntries;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 
 public class ContainerSmelter extends Container{
 
-	private List<ItemStack> ores = new ArrayList<ItemStack>();
 
 	public ContainerSmelter(InventoryPlayer playerInventory, TileEntitySmelter smelter) {
 
-			for(String ore : OreDictionary.getOreNames())
-				if(!ore.isEmpty() && ore != null)
-					if(ore.toLowerCase().contains("ore"))
-						ores.addAll(OreDictionary.getOres(ore));
-
-		this.addSlotToContainer(new SlotSmelterInput(ores, smelter.getInventory(), 0, 56, 17));
+		this.addSlotToContainer(new SlotSmelterInput(smelter.getInventory(), 0, 56, 17));
 		this.addSlotToContainer(new SlotPanOutput(playerInventory.player, smelter.getInventory(), 1, 116, 35));
 		this.addSlotToContainer(new SlotPanOutput(playerInventory.player, smelter.getInventory(), 2, 140, 39));
 
@@ -45,55 +40,50 @@ public class ContainerSmelter extends Container{
 	 */
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
-		ItemStack itemstack = ItemStack.EMPTY;
+		ItemStack bufferStack = ItemStack.EMPTY; //no idea... should have made documentation when i was coding this. TODO
 		Slot slot = (Slot)this.inventorySlots.get(index);
 
 		if (slot != null && slot.getHasStack())
 		{
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
+			ItemStack slotStack = slot.getStack();
+			bufferStack = slotStack.copy();
 
-			if (index == 1 || index == 2)
+			if (index == 1 || index == 2) //output slots
 			{
-				if (!this.mergeItemStack(itemstack1, 3, 39, true))
+				if (!this.mergeItemStack(slotStack, 3, 39, true)) //merge to player inventory
 				{
 					return ItemStack.EMPTY;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onSlotChange(slotStack, bufferStack);
 			}
-			else if (index != 0)
+			else if (index != 0)// player inventory
 			{
-				if (itemstack1.getItem() instanceof ItemBlock)
+				if (!SmelterEntries.getInstance().getResult(slotStack).isEmpty()) //if the item clicked can be smolten
 				{
-					for(ItemStack stack : ores)
-						if(OreDictionary.itemMatches(stack, itemstack1, false))
-						{
-							if (!this.mergeItemStack(itemstack1, 0, 1, false))
-							{
-								return ItemStack.EMPTY;
-							}
-							break;
-						}
-				}
-				else if (index >= 3 && index < 30)
-				{
-					if (!this.mergeItemStack(itemstack1, 30, 39, false))
+					if (!this.mergeItemStack(slotStack, 0, 1, false)) //mergo to input slot
 					{
 						return ItemStack.EMPTY;
 					}
 				}
-				else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false))
+				else if (index >= 3 && index < 30) //if player inventory (no hotbar) is clicked and the item cannot be smolten
+				{
+					if (!this.mergeItemStack(slotStack, 30, 39, false)) //merge into player hotbar
+					{
+						return ItemStack.EMPTY;
+					}
+				}
+				else if (index >= 30 && index < 39 && !this.mergeItemStack(slotStack, 3, 30, false)) //vice versa...
 				{
 					return ItemStack.EMPTY;
 				}
 			}
-			else if (!this.mergeItemStack(itemstack1, 3, 39, false))
+			else if (!this.mergeItemStack(slotStack, 3, 39, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.isEmpty())
+			if (slotStack.isEmpty())
 			{
 				slot.putStack(ItemStack.EMPTY);
 			}
@@ -102,14 +92,14 @@ public class ContainerSmelter extends Container{
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.getCount() == itemstack.getCount())
+			if (slotStack.getCount() == bufferStack.getCount())
 			{
 				return ItemStack.EMPTY;
 			}
 
-			slot.onTake(playerIn, itemstack1);
+			slot.onTake(playerIn, slotStack);
 		}
 
-		return itemstack;
+		return bufferStack;
 	}
 }

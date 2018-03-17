@@ -1,13 +1,16 @@
 package subaraki.exsartagine.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 public class TileEntityRangeExtension extends TileEntity implements ITickable {
 
@@ -32,6 +35,42 @@ public class TileEntityRangeExtension extends TileEntity implements ITickable {
 
 	public BlockPos getParentRange() {
 		return parentRange;
+	}
+	
+	private TileEntity getHostCooker()
+	{
+		if(this.getWorld().getTileEntity(this.getPos().up()) != null)
+		{
+			return this.getWorld().getTileEntity(this.getPos().up());
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		
+		if(facing.equals(facing.DOWN))
+		{
+			if(getHostCooker() instanceof TileEntityCooker)
+			{
+				return getHostCooker().getCapability(capability, facing);
+			}
+		}
+		
+		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if(facing.equals(facing.DOWN))
+		{
+			if(getHostCooker() instanceof TileEntityCooker)
+			{
+				return getHostCooker().hasCapability(capability, facing);
+			}
+		}
+		return super.hasCapability(capability, facing);
 	}
 
 	@Override

@@ -26,10 +26,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.ExSartagine;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.tileentity.TileEntityPot;
 import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
+import subaraki.exsartagine.tileentity.TileEntitySmelter;
 import subaraki.exsartagine.util.Reference;
 
 public class BlockPot extends BlockHeatable {
@@ -87,7 +89,12 @@ public class BlockPot extends BlockHeatable {
 
 		if (tileentity instanceof TileEntityPot)
 		{
-			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntityPot)tileentity).getInventory());
+			TileEntityPot te = (TileEntityPot)tileentity;
+			if(te.getInventory() instanceof ItemStackHandler)
+			{
+				ItemStackHandler inventory = (ItemStackHandler) te.getInventory();
+				InventoryHelper.dropInventoryItems(worldIn, pos, inventory);
+			}		
 		}
 
 		super.breakBlock(worldIn, pos, state);
@@ -173,7 +180,7 @@ public class BlockPot extends BlockHeatable {
 
 		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(FULL, (meta & 4) > 0);
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
@@ -202,7 +209,7 @@ public class BlockPot extends BlockHeatable {
 			world.notifyBlockUpdate(pos, state, getDefaultState(), 3);
 		}
 	}
-	
+
 	@Override
 	protected Class getTileEntity() {
 		return TileEntityPot.class;

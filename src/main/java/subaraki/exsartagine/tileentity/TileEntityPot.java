@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.block.BlockPot;
 import subaraki.exsartagine.block.ExSartagineBlock;
+import subaraki.exsartagine.gui.server.SlotPotInput;
 
 public class TileEntityPot extends TileEntityCooker{
 
@@ -16,7 +16,7 @@ public class TileEntityPot extends TileEntityCooker{
 	private int waterLevel = 0;
 
 	public TileEntityPot() {
-		this.inventory = new ItemStackHandler(2);
+		initInventory();
 	}
 
 	public int getWaterLevel() {
@@ -36,19 +36,18 @@ public class TileEntityPot extends TileEntityCooker{
 
 				if(getEntry().getCount() > 0 )
 				{
-					if(getEntry().getCount() > 0 && 
-							(getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
+					if(getEntry().getCount() > 0 && (getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
 					{
 						if(getResult().isEmpty())
 						{
 							ItemStack stack = PotRecipes.getInstance().getCookingResult(getEntryStackOne()).copy();
-							
+
 							if(getEntry().getItem() instanceof ItemBlock && getEntry().getItem() == Item.getItemFromBlock(Blocks.STONE))
 							{
 								stack = world.rand.nextInt(5) == 0 ? ItemStack.EMPTY : stack;
 							}
 							
-							getInventory().setStackInSlot(RESULT, stack.copy());
+							setResult(stack.copy());
 							getEntry().shrink(1);
 						}
 						else
@@ -75,8 +74,7 @@ public class TileEntityPot extends TileEntityCooker{
 		{
 			if(!getEntry().isEmpty() && 
 					getEntry().getCount() > 0 && 
-					getWaterLevel() > 0 &&
-					(getResult().getItem().equals(PotRecipes.getInstance().getCookingResult(getEntry()).getItem()) 
+					getWaterLevel() > 0 && (getResult().getItem().equals(PotRecipes.getInstance().getCookingResult(getEntry()).getItem()) 
 							|| getResult().isEmpty())) //or recipe fits
 			{
 				cookingTime++;
@@ -96,6 +94,11 @@ public class TileEntityPot extends TileEntityCooker{
 		}
 	}
 
+	@Override
+	public boolean isValid(ItemStack stack) {
+		return new SlotPotInput(null, 0, 0, 0).isItemValid(stack);
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);

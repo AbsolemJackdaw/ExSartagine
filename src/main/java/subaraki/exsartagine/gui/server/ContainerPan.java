@@ -54,14 +54,8 @@ public class ContainerPan extends Container{
             }
             else if (index != 0)
             {
-            	boolean flag = false;
-            	int[] ids = OreDictionary.getOreIDs(itemstack1);
-            	for(int id: ids)
-            		if(OreDictionary.getOreName(id).contains("food")){
-            			flag = true;
-            			break;
-            		}
-                if ((itemstack1.getItem() instanceof ItemFood || flag) && !FurnaceRecipes.instance().getSmeltingResult(itemstack1).isEmpty())
+            	Slot input = (Slot)this.inventorySlots.get(0);
+                if (input instanceof SlotPanInput && ((SlotPanInput)input).isItemValid(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {

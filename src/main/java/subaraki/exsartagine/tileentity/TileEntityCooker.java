@@ -1,5 +1,6 @@
 package subaraki.exsartagine.tileentity;
 
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +13,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.items.wrapper.RangedWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public class TileEntityCooker extends TileEntity implements ITickable {
 
@@ -22,23 +27,66 @@ public class TileEntityCooker extends TileEntity implements ITickable {
 	protected static final int RESULT = 1;
 	protected static final int ENTRY = 0;
 
-	protected ItemStackHandler inventory = new ItemStackHandler(2);
+	private ISHCooker inventory;
+	private RangedWrapper input;
+	private RangedWrapper output;
 
+	/**inits inventory with 2 slots. input and output*/
+	protected void initInventory(){
+		inventory = new ISHCooker(2, this);
+		input = new RangedWrapper(inventory, 0, 1);
+		output = new RangedWrapper(inventory, 1, 2);
+	}
+	
+	/**i nit inventory with more slots, where 0 is input, and x>0 is output*/
+	protected void initInventory(int slots){
+		inventory = new ISHCooker(slots, this);
+		
+		input = new RangedWrapper(inventory, 0, 1);
+		output = new RangedWrapper(inventory, 1, slots);
+		
+	}
+
+	public void setEntry(ItemStack stack){
+		getInventory().insertItem(ENTRY, stack, false);
+	}
+
+	public void setResult(ItemStack stack){
+		setResult(RESULT, stack);
+	}
+	
+	public void setResult(int slot, ItemStack stack){
+		getInventory().insertItem(slot, stack, false);
+	}
+	
 	public ItemStack getEntry(){
-		return inventory.getStackInSlot(ENTRY);
+		return getInventory().getStackInSlot(ENTRY);
 	}
-	protected ItemStack getEntryStackOne(){
-		ItemStack stack = inventory.getStackInSlot(ENTRY).copy();
-		//stack.setCount(1);
-		return stack;
+
+	public ItemStack getResult() {
+		return this.getResult(RESULT);
 	}
-	public ItemStack getResult(){
-		return inventory.getStackInSlot(RESULT);
+
+	public ItemStack getResult(int slot){
+		return getInventory().getStackInSlot(slot);
+	}
+	
+	public ItemStack getEntryStackOne(){
+		ItemStack stack = getInventory().getStackInSlot(ENTRY);
+		return stack.copy(); 
+	}
+
+	public boolean isValid(ItemStack stack){
+		return false;
 	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+
+			if(facing == facing.UP)
+				return false;
+
 			return true;
 		}
 		return super.hasCapability(capability, facing);
@@ -47,15 +95,23 @@ public class TileEntityCooker extends TileEntity implements ITickable {
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return (T) inventory;
+
+			if(facing == null)
+				return (T) inventory;
+			
+			if(EnumFacing.DOWN == facing) //to prevent npe. facing can be null
+				return (T)output;
+			else
+				return (T)input;
+
 		}
 		return super.getCapability(capability, facing);
 	}
 
-	public ItemStackHandler getInventory(){
-		return inventory;
+	public IItemHandler getInventory(){
+		return getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null) ;
 	}
-
+	
 	public void setCooking(){
 		isCooking = true;
 	}

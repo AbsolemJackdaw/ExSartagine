@@ -3,16 +3,18 @@ package subaraki.exsartagine.tileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.block.BlockSmelter;
 import subaraki.exsartagine.block.ExSartagineBlock;
+import subaraki.exsartagine.gui.server.SlotSmelterInput;
+import subaraki.exsartagine.util.ConfigHandler;
 
 public class TileEntitySmelter extends TileEntityCooker {
 
-	private static final int BONUS = 2;
+	private static final int BONUSSLOT = 2;
+	private int bonusChance = ConfigHandler.percent; // in percentage
 
 	public TileEntitySmelter() {
-		this.inventory = new ItemStackHandler(3);
+		initInventory(3);
 	}
 
 	@Override
@@ -25,11 +27,11 @@ public class TileEntitySmelter extends TileEntityCooker {
 				if(getEntry().getCount() > 0 && 
 						(getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
 				{
-					if(world.rand.nextInt(3) == 0){
+					if(world.rand.nextInt(100)+1 <= bonusChance){ //+1, so 0% is no chance [1-100]
 						if(getBonus().isEmpty())
 						{
 							ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getEntryStackOne()).copy();
-							inventory.setStackInSlot(BONUS, itemstack);
+							setResult(BONUSSLOT, itemstack);
 						}
 						else
 							getBonus().grow(1);
@@ -38,7 +40,7 @@ public class TileEntitySmelter extends TileEntityCooker {
 					if(getResult().isEmpty())
 					{
 						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getEntryStackOne()).copy();
-						inventory.setStackInSlot(RESULT, itemstack);
+						setResult(itemstack);
 						getEntry().shrink(1);
 					}
 					else
@@ -74,9 +76,14 @@ public class TileEntitySmelter extends TileEntityCooker {
 	}
 
 	private ItemStack getBonus(){
-		return inventory.getStackInSlot(BONUS);
+		return getResult(BONUSSLOT);
 	}
 
+	@Override
+	public boolean isValid(ItemStack stack) {
+		return new SlotSmelterInput(null, 0, 0, 0).isItemValid(stack);
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);

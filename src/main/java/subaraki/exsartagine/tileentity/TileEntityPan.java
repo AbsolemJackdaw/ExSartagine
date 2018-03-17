@@ -3,13 +3,15 @@ package subaraki.exsartagine.tileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.block.ExSartagineBlock;
+import subaraki.exsartagine.gui.server.SlotPanInput;
 
 public class TileEntityPan extends TileEntityCooker{
 
 	public TileEntityPan() {
-		this.inventory = new ItemStackHandler(2);
+		initInventory();
 	}
 	
 	@Override
@@ -19,15 +21,13 @@ public class TileEntityPan extends TileEntityCooker{
 		{
 			if(!world.isRemote)
 			{
-				if(getEntry().getCount() > 0 && 
-						(getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
+				if(getEntry().getCount() > 0 && (getResult().isEmpty() || getResult().getCount() < getResult().getMaxStackSize()))
 				{
 					if(getResult().isEmpty())
 					{
-						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getEntryStackOne()).copy();
-						//itemstack.setCount(1);
-						inventory.setStackInSlot(RESULT, itemstack);
-
+						ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(getEntry()).copy();
+						
+						setResult(itemstack.copy());
 						getEntry().shrink(1);
 					}
 					else
@@ -51,6 +51,11 @@ public class TileEntityPan extends TileEntityCooker{
 		}
 	}
 
+	@Override
+	public boolean isValid(ItemStack stack) {
+		return new SlotPanInput(null, 0, 0, 0).isItemValid(stack);
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);

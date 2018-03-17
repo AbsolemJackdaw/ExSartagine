@@ -12,7 +12,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -25,9 +24,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 import subaraki.exsartagine.ExSartagine;
 import subaraki.exsartagine.item.ExSartagineItems;
-import subaraki.exsartagine.tileentity.TileEntityRangeExtension;
 import subaraki.exsartagine.tileentity.TileEntitySmelter;
 import subaraki.exsartagine.util.Reference;
 
@@ -72,7 +71,12 @@ public class BlockSmelter extends BlockHeatable {
 
 		if (tileentity instanceof TileEntitySmelter)
 		{
-			InventoryHelper.dropInventoryItems(worldIn, pos, ((TileEntitySmelter)tileentity).getInventory());
+			TileEntitySmelter te = (TileEntitySmelter)tileentity;
+			if(te.getInventory() instanceof ItemStackHandler)
+			{
+				ItemStackHandler inventory = (ItemStackHandler) te.getInventory();
+				InventoryHelper.dropInventoryItems(worldIn, pos, inventory);
+			}
 		}
 
 		super.breakBlock(worldIn, pos, state);

@@ -107,6 +107,8 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		return super.getCapability(capability, facing);
 	}
 
+	
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
@@ -125,7 +127,6 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		}
 		compound.setTag("connections", (NBTTagCompound)connections);
 
-		System.out.println("write "+connections);
 		return compound;
 	}
 
@@ -138,7 +139,6 @@ public class TileEntityRange extends TileEntity implements ITickable {
 		maxFuelTimer = compound.getInteger("max");
 
 		NBTTagCompound connections = compound.getCompoundTag("connections");
-		System.out.println("read "+connections);
 		for (int i = 0; i < 4; i++)
 			if(connections.hasKey(String.valueOf(i)))
 			{
@@ -190,7 +190,6 @@ public class TileEntityRange extends TileEntity implements ITickable {
 
 					IBlockState state = world.getBlockState(posTere);
 
-					System.out.println(posTere + " " + setCooking);
 					if(setCooking)
 					{
 						IBlockState lit = ExSartagineBlock.range_extension_lit.getDefaultState().

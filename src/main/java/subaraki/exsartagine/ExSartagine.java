@@ -1,6 +1,11 @@
 package subaraki.exsartagine;
 
-import static subaraki.exsartagine.util.Reference.*;
+import static subaraki.exsartagine.util.Reference.CLIENT_PROXY;
+import static subaraki.exsartagine.util.Reference.DEPENDENCY;
+import static subaraki.exsartagine.util.Reference.MODID;
+import static subaraki.exsartagine.util.Reference.NAME;
+import static subaraki.exsartagine.util.Reference.SERVER_PROXY;
+import static subaraki.exsartagine.util.Reference.VERSION;
 
 import java.util.Arrays;
 
@@ -16,6 +21,7 @@ import subaraki.exsartagine.gui.GuiHandler;
 import subaraki.exsartagine.item.ExSartagineItems;
 import subaraki.exsartagine.proxy.ServerProxy;
 import subaraki.exsartagine.recipe.Recipes;
+import subaraki.exsartagine.util.ConfigHandler;
 
 @Mod(name = NAME, modid = MODID, version = VERSION, dependencies = DEPENDENCY)
 public class ExSartagine {
@@ -36,6 +42,8 @@ public class ExSartagine {
         modMeta.url = "https://github.com/ArtixAllMighty/ExSartagine/wiki";
         instance = this;
 
+		ConfigHandler.instance.loadConfig(event.getSuggestedConfigurationFile());
+        
         ExSartagineBlock.load();
         ExSartagineItems.load();
 
