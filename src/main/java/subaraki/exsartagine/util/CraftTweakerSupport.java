@@ -9,8 +9,8 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import subaraki.exsartagine.recipe.PanRecipes;
 import subaraki.exsartagine.recipe.SmelterEntries;
 
-@ZenRegister
 @ZenClass("mods."+Reference.MODID+".ExSartagine")
+@ZenRegister
 public class CraftTweakerSupport {
 
 	@ZenMethod
